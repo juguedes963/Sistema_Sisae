@@ -1,20 +1,17 @@
 <div class="container">
 	
-		<h5 class="text-center display-4 my-3">Lista de alunos</h5>
+	<h5 class="text-center display-4 my-3">Lista de alunos</h5>
+	
+	{{#data}}
 
-		
-		
-		{{#data}}
-
-		<div class="card mb-3">
-			<div class="card-body">
-				<h5 class="card-title">{{nome}}</h5>
-				<p class="lead">{{turma}}</p>
-			</div>
+	<div class="card mb-3">
+		<div class="card-body">
+			<h5 class="card-title">{{nome}}</h5>
+			<p class="lead">{{codigo}}</p>
 		</div>
-		
-			  
-		  {{/data}}
-			
-		
+	</div>
+	
+		  
+	{{/data}}
+					
 </div>
