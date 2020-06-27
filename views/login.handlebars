@@ -42,13 +42,4 @@
 
 </div>
 
-<script>
-	$(document).ready( () => {
-		$('#myModal').modal('show');
-
-		$('#myModal').on('hide.bs.modal', (ev) => {
-		  setTimeout(function() { window.location = '/'; }, 0);
-		});
-			
-	});
-</script>
+{{>_script}}
