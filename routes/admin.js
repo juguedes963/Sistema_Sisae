@@ -30,6 +30,12 @@ router.get('/alunos', (req,res) => {
 	})
 })
 
+router.get('/turmas', (req,res) => {
+	sql.query("SELECT * FROM turma", (err, results, fields) => {
+		res.render('admin/addTurma',{turmas: results});
+	})
+})
+
 router.get('/usuarios' , (req, res) => {
 	sql.query("SELECT * from usuario", (err, results, fields) => {
 		res.render('admin/select',{data: results});
@@ -40,6 +46,11 @@ router.get('/usuarios' , (req, res) => {
 
 router.post('/alunos/add', urlencodeParser, (req, res) => {
 	sql.query("INSERT INTO alunos VALUES (?,?,?)", [req.id, req.body.nome, req.body.turma]);
+	res.render('index');
+})
+
+router.post('/turmas/add', urlencodeParser, (req, res) => {
+	sql.query("INSERT INTO turma VALUES (?,?)", [req.id, req.body.codigo]);
 	res.render('index');
 })
 
