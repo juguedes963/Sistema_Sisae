@@ -24,10 +24,23 @@ router.get('/', (req, res) => {
 	res.render('admin/index');
 });
 
-router.get('/select' , (req, res) => {
+router.get('/alunos', (req,res) => {
+	sql.query("SELECT * FROM turma", (err, results, fields) => {
+		res.render('admin/addAluno',{turmas: results});
+	})
+})
+
+router.get('/usuarios' , (req, res) => {
 	sql.query("SELECT * from usuario", (err, results, fields) => {
 		res.render('admin/select',{data: results});
 	})
+})
+
+/* ======= POST =======*/
+
+router.post('/alunos/add', urlencodeParser, (req, res) => {
+	sql.query("INSERT INTO alunos VALUES (?,?,?)", [req.id, req.body.nome, req.body.turma]);
+	res.render('index');
 })
 
 module.exports = router;
