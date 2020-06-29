@@ -36,6 +36,11 @@ router.get('/alunos/ver', (req,res) => {
 	})
 })
 
+router.get('/alunos/deletar/:id', (req,res) => {
+	sql.query("DELETE FROM alunos WHERE matricula=?", [req.params.id]);
+	res.render('admin');
+})
+
 router.get('/turmas', (req,res) => {
 	sql.query("SELECT * FROM turma", (err, results, fields) => {
 		res.render('admin/addTurma',{turmas: results});
@@ -51,7 +56,7 @@ router.get('/usuarios' , (req, res) => {
 /* ======= POST =======*/
 
 router.post('/alunos/add', urlencodeParser, (req, res) => {
-	sql.query("INSERT INTO alunos VALUES (?,?,?)", [req.id, req.body.nome, req.body.turma]);
+	sql.query("INSERT INTO alunos VALUES (?,?,?)", [req.matricula, req.body.nome, req.body.turma]);
 	res.render('index');
 })
 
