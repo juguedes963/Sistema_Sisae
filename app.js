@@ -2,6 +2,8 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const path = require("path");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 
 const app = express();
@@ -13,11 +15,23 @@ app.set("view engine",'handlebars');
 //Rotas estáticas
 app.use(express.static(path.join(__dirname, "public")));
 
-//Middleware
-app.use((req, res, next) => {
-	console.log("Middleware!")
-	next();
-})
+
+//Configurações
+
+	//Sessões
+	app.use(session({
+		secret: "sisaesystem",
+		resave: true,
+		saveUnitialized: true
+	}))
+
+	app.use(flash());
+
+	app.use((req, res, next) => {
+		res.locals.success_msg = req.flash("success_msg")
+		res.locals.error_msg = req.flash("error_msg")
+		next();
+	})
 
 
 

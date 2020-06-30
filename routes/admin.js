@@ -61,8 +61,19 @@ router.get('/users/deletar/:id', (req,res) => {
 /* ======= POST =======*/
 
 router.post('/alunos/add', urlencodeParser, (req, res) => {
-	sql.query("INSERT INTO alunos VALUES (?,?,?)", [req.matricula, req.body.nome, req.body.turma]);
-	res.render('index');
+
+	var erros = [];
+
+	if(req.body.nome.length < 2){
+		erros.push({text: "Nome muito curto"})
+	}
+
+	if(erros.length > 0){
+		res.render("admin/addAluno", {erros: erros})
+	}else{
+		sql.query("INSERT INTO alunos VALUES (?,?,?)", [req.matricula, req.body.nome, req.body.turma]);
+		res.render('index');
+	}
 })
 
 router.post('/turmas/add', urlencodeParser, (req, res) => {
