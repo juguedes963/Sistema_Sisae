@@ -13,6 +13,12 @@ app.set("view engine",'handlebars');
 //Rotas estáticas
 app.use(express.static(path.join(__dirname, "public")));
 
+//Middleware
+app.use((req, res, next) => {
+	console.log("Middleware!")
+	next();
+})
+
 
 
 //Chamando as rotas dinâmicas
