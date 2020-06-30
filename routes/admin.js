@@ -47,10 +47,15 @@ router.get('/turmas', (req,res) => {
 	})
 })
 
-router.get('/usuarios' , (req, res) => {
+router.get('/users' , (req, res) => {
 	sql.query("SELECT * from usuario", (err, results, fields) => {
 		res.render('admin/select',{data: results});
 	})
+})
+
+router.get('/users/deletar/:id', (req,res) => {
+	sql.query("DELETE FROM usuario WHERE id=?", [req.params.id]);
+	res.render('admin');
 })
 
 /* ======= POST =======*/
