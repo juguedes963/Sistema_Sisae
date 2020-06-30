@@ -64,6 +64,10 @@ router.post('/alunos/add', urlencodeParser, (req, res) => {
 
 	var erros = [];
 
+	if(!req.body.nome || req.body.nome == null || typeof req.body.nome == undefined){
+		erros.push({text: "Nome inválido"})
+	}
+
 	if(req.body.nome.length < 2){
 		erros.push({text: "Nome muito curto"})
 	}
