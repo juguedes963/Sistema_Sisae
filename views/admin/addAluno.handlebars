@@ -2,10 +2,9 @@
 <h5 class="text-center display-4 my-5">Cadastrar aluno</h5>
 
 {{#each erros}}
-	<div class="alert alert-danger">{{text}}</div>
+	{{>_error}}
 {{else}}
-
-
+	
 {{/each}}
 <div class="card bg-light">
 	<div class="card-body mb-15">
