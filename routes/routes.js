@@ -45,7 +45,7 @@ router.post('/cadastro', urlencodeParser, (req, res) => {
 	var erros = [];
 
 	if(req.body.senha.length < 5){
-		erros.push({text: "Erro: Senha fraca!"});
+		erros.push({text: "Senha fraca!"});
 	}
 
 	if(erros.length > 0){
