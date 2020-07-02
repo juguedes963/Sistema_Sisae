@@ -61,6 +61,10 @@ router.post('/users/add', urlencodeParser, (req, res) => {
 		erros.push({text: "Senha fraca!"});
 	}
 
+	if(req.body.senha != req.body.confSenha){
+		erros.push({text: "Erro: Senhas não coincidem!"});
+	}
+
 	if(erros.length > 0){
 		res.render("index", {erros: erros});
 	}else{
