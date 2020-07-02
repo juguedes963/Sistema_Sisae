@@ -40,7 +40,7 @@ router.get('/select', (req,res) => {
 
 
 /* ======= POST =======*/
-router.post('/cadastro', urlencodeParser, (req, res) => {
+router.post('/users/add', urlencodeParser, (req, res) => {
 
 	var erros = [];
 
