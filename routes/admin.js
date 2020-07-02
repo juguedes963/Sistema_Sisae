@@ -88,7 +88,7 @@ router.post('/turmas/add', urlencodeParser, (req, res) => {
 		erros.push({text: "Turma inválida!"})
 	}
 
-	if(req.body.codigo.length < 2){
+	if(req.body.codigo.length < 4){
 		erros.push({text: "Nome muito curto!"})
 	}
 
