@@ -1,11 +1,11 @@
 <div class="container">
 <h5 class="text-center display-4 my-5">Cadastrar aluno</h5>
 
-{{#each erros}}
-	{{>_error}}
-{{else}}
+	{{#each erros}}
+		{{>_error}}
+	{{else}}
+	{{/each}}
 	
-{{/each}}
 <div class="card bg-light">
 	<div class="card-body mb-15">
 		<form action="alunos/add" method="POST">
