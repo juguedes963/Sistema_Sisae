@@ -44,6 +44,19 @@ router.post('/users/add', urlencodeParser, (req, res) => {
 
 	var erros = [];
 
+
+	if(!req.body.email || req.body.email == null || typeof req.body.email == undefined){
+		erros.push({text: "Erro: E-mail inválido!"})
+	}
+
+	if(!req.body.user || req.body.user == null || typeof req.body.user == undefined){
+		erros.push({text: "Erro: Nome de usuário inválido!"})
+	}
+
+	if(!req.body.senha || req.body.senha == null || typeof req.body.senha == undefined){
+		erros.push({text: "Erro: Senha inválida!"})
+	}
+
 	if(req.body.senha.length < 5){
 		erros.push({text: "Senha fraca!"});
 	}
