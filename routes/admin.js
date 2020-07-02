@@ -65,11 +65,11 @@ router.post('/alunos/add', urlencodeParser, (req, res) => {
 	var erros = [];
 
 	if(!req.body.nome || req.body.nome == null || typeof req.body.nome == undefined){
-		erros.push({text: "Nome inválido"})
+		erros.push({text: "Nome inválido!"})
 	}
 
 	if(req.body.nome.length < 2){
-		erros.push({text: "Nome muito curto"})
+		erros.push({text: "Nome muito curto!"})
 	}
 
 	if(erros.length > 0){
@@ -81,8 +81,23 @@ router.post('/alunos/add', urlencodeParser, (req, res) => {
 })
 
 router.post('/turmas/add', urlencodeParser, (req, res) => {
-	sql.query("INSERT INTO turma VALUES (?,?)", [req.id, req.body.codigo]);
-	res.render('index');
+
+	var erros = [];
+
+	if(!req.body.codigo || req.body.codigo == null || typeof req.body.codigo == undefined){
+		erros.push({text: "Turma inválida!"})
+	}
+
+	if(req.body.codigo.length < 2){
+		erros.push({text: "Nome muito curto!"})
+	}
+
+	if(erros.length > 0){
+		res.render("admin/addTurma", {erros: erros})
+	}else {
+		sql.query("INSERT INTO turma VALUES (?,?)", [req.id, req.body.codigo]);
+		res.render('index');
+	}
 })
 
 module.exports = router;
