@@ -41,8 +41,19 @@ router.get('/select', (req,res) => {
 
 /* ======= POST =======*/
 router.post('/cadastro', urlencodeParser, (req, res) => {
-	sql.query("INSERT INTO usuario VALUES (?,?,?,?,?)", [req.id, req.body.email, req.body.user, req.body.senha, false]);
-	res.render('index')
+
+	var erros = [];
+
+	if(req.body.senha.length < 5){
+		erros.push({text: "Erro: Senha fraca!"});
+	}
+
+	if(erros.length > 0){
+		res.render("index", {erros: erros});
+	}else{
+		sql.query("INSERT INTO usuario VALUES (?,?,?,?,?)", [req.id, req.body.email, req.body.user, req.body.senha, false]);
+		res.render('index')
+	}
 })
 
 
