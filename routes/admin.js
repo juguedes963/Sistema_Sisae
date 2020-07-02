@@ -65,11 +65,11 @@ router.post('/alunos/add', urlencodeParser, (req, res) => {
 	var erros = [];
 
 	if(!req.body.nome || req.body.nome == null || typeof req.body.nome == undefined){
-		erros.push({text: "Nome inválido!"})
+		erros.push({text: "Erro: Nome inválido!"})
 	}
 
 	if(req.body.nome.length < 2){
-		erros.push({text: "Nome muito curto!"})
+		erros.push({text: "Erro: Nome muito curto!"})
 	}
 
 	if(erros.length > 0){
@@ -85,11 +85,11 @@ router.post('/turmas/add', urlencodeParser, (req, res) => {
 	var erros = [];
 
 	if(!req.body.codigo || req.body.codigo == null || typeof req.body.codigo == undefined){
-		erros.push({text: "Turma inválida!"})
+		erros.push({text: "Erro: Turma inválida!"})
 	}
 
 	if(req.body.codigo.length < 4){
-		erros.push({text: "Nome muito curto!"})
+		erros.push({text: "Erro: Nome muito curto!"})
 	}
 
 	if(erros.length > 0){
