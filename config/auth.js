@@ -14,9 +14,9 @@ module.exports = function(passport){
 
 	passport.use(new localStrategy({usernameField:'username', passwordField:'senha'}, (user, senha, done) => {
 
-		sql.query("SELECT 1 FROM usuario WHERE username=? and senha=?", [user,senha], (err, rows) => {
+		sql.query("SELECT * FROM usuario WHERE username=? and senha=?", [user,senha], (err, rows) => {
 			if(rows.length > 0){
-				return done(null, user)
+				return done(null, rows)
 			}else {
 				return done(null, false, {message: "Dados não encontrados!"})
 			}
@@ -25,13 +25,10 @@ module.exports = function(passport){
 	}))
 
 	passport.serializeUser((user, done) => {
+	  done(null, user);
+	});
 
-		done(null, user)
-	})
-
-	passport.deserializeUser((id, done) => {
-		sql.query("SELECT * FROM usuario WHERE id = '"+ id +"'", (err, user) => {
-			done(err, user)
-		})
-	})
+	passport.deserializeUser((user, done) => {
+	  done(null, user);
+	});
 }

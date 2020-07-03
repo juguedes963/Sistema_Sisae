@@ -11,9 +11,6 @@ require("./config/auth")(passport);
 const app = express();
 
 
-//Rotas estáticas
-app.use(express.static(path.join(__dirname, "public")));
-
 
 //Configurações
 
@@ -42,6 +39,9 @@ app.use(express.static(path.join(__dirname, "public")));
 	//Template engine
 	app.engine("handlebars",handlebars({defaultLayout:'main'}));
 	app.set("view engine",'handlebars');
+
+	//Public
+	app.use(express.static(path.join(__dirname, "public")));
 
 
 
