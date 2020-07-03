@@ -11,6 +11,8 @@ const sql = mysql.createConnection({
 	port: '3306',
 });
 sql.query('use sisae');
+const bcrypt = require("bcryptjs");
+const passport = require("passport");
 
 /* ======= Definindo rotas via GET e POST =======*/
 
@@ -26,6 +28,7 @@ router.get('/', (req, res) => {
 router.get('/create', (req, res) => {
 	res.render('create');
 });
+
 
 router.get('/login', (req, res) => {
 	res.render('login');
@@ -73,8 +76,12 @@ router.post('/users/add', urlencodeParser, (req, res) => {
 	}
 })
 
-router.post('/users/login', (req, res) => {
-	
+router.post('/login', (req, res, next) => {
+	passport.authenticate("local", {
+		successRedirect: "/",
+		failureRedirect: "login",
+		failureFlash: true
+	})(req, res, next)
 })
 
 
