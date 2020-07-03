@@ -14,19 +14,12 @@ module.exports = function(passport){
 
 	passport.use(new localStrategy({usernameField:'username', passwordField:'senha'}, (user, senha, done) => {
 
-		sql.query("SELECT * FROM usuario WHERE username = '"+ user +"'", (err, rows) => {
-			if(!user){
-				return done(null, false, {message: 'Esta conta não existe!'})
+		sql.query("SELECT 1 FROM usuario WHERE username=? and senha=?", [user,senha], (err, rows) => {
+			if(rows.length < 1){
+				return done(null, false, {message: "Dados não encontrados!"})
 			}
-
-			bcrypt.compare(senha, user.senha, (err, batem) => {
-				if(batem){
-					return done(null, user)
-				}else{
-					return done(null, false, {message: "Senha incorreta!"})
-				}
-			})
 		})
+
 	}))
 
 	passport.serializeUser((user, done) => {
