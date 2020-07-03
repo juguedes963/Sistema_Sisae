@@ -3,7 +3,6 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const path = require("path");
 const bodyParser = require('body-parser');
-const urlencodeParser = bodyParser.urlencoded({extended:false});
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
@@ -11,13 +10,9 @@ require("./config/auth")(passport);
 
 const app = express();
 
-//Template engine
-app.engine("handlebars",handlebars({defaultLayout:'main'}));
-app.set("view engine",'handlebars');
 
 //Rotas estáticas
 app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //Configurações
@@ -36,8 +31,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 	app.use((req, res, next) => {
 		res.locals.error = req.flash("error");
+		res.locals.user = req.user || null;
 		next();
 	})
+
+	//BodyParser
+	app.use(bodyParser.urlencoded({ extended: true }));
+	app.use(bodyParser.json());
+
+	//Template engine
+	app.engine("handlebars",handlebars({defaultLayout:'main'}));
+	app.set("view engine",'handlebars');
 
 
 

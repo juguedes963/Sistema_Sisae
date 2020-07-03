@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-const urlencodeParser = bodyParser.urlencoded({extended:false});
+const urlencodeParser = bodyParser.urlencoded({extended:true});
 const sql = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
