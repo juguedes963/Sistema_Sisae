@@ -13,7 +13,6 @@ sql.query('use sisae');
 module.exports = function(passport){
 
 	passport.use(new localStrategy({usernameField:'username', passwordField:'senha'}, (user, senha, done) => {
-
 		sql.query("SELECT * FROM usuario WHERE username=? and senha=?", [user,senha], (err, rows) => {
 			if(rows.length > 0){
 				return done(null, rows)

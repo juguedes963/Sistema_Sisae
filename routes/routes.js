@@ -51,6 +51,7 @@ router.get('/logout', (req,res) => {
 router.post('/users/add', urlencodeParser, (req, res) => {
 
 	var erros = [];
+	var success = [];
 
 
 	if(!req.body.email || req.body.email == null || typeof req.body.email == undefined){
@@ -76,8 +77,9 @@ router.post('/users/add', urlencodeParser, (req, res) => {
 	if(erros.length > 0){
 		res.render("index", {erros: erros});
 	}else{
+		success.push({text: "Usuário(a) cadastrado com êxito!"})
 		sql.query("INSERT INTO usuario VALUES (?,?,?,?,?)", [req.id, req.body.email, req.body.username, req.body.senha, false]);
-		res.render('index')
+		res.render('index', {success: success})
 	}
 })
 
