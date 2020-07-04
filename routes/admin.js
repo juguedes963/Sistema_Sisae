@@ -11,6 +11,7 @@ const sql = mysql.createConnection({
 	port: '3306',
 });
 sql.query('use sisae');
+const {permissao} = require("../helpers/permissao")
 
 /* ======= Definindo rotas via GET e POST =======*/
 
@@ -20,7 +21,7 @@ sql.query('use sisae');
 
 
 //Rota principal 
-router.get('/', (req, res) => {
+router.get('/', permissao, (req, res) => {
 	res.render('admin/index');
 });
 
