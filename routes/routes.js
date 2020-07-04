@@ -57,7 +57,7 @@ router.post('/users/add', urlencodeParser, (req, res) => {
 		erros.push({text: "Erro: E-mail inválido!"})
 	}
 
-	if(!req.body.user || req.body.user == null || typeof req.body.user == undefined){
+	if(!req.body.username || req.body.username == null || typeof req.body.username == undefined){
 		erros.push({text: "Erro: Nome de usuário inválido!"})
 	}
 
@@ -76,7 +76,7 @@ router.post('/users/add', urlencodeParser, (req, res) => {
 	if(erros.length > 0){
 		res.render("index", {erros: erros});
 	}else{
-		sql.query("INSERT INTO usuario VALUES (?,?,?,?,?)", [req.id, req.body.email, req.body.user, req.body.senha, false]);
+		sql.query("INSERT INTO usuario VALUES (?,?,?,?,?)", [req.id, req.body.email, req.body.username, req.body.senha, true]);
 		res.render('index')
 	}
 })
