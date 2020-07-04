@@ -48,7 +48,7 @@ router.get('/turmas', (req,res) => {
 	})
 })
 
-router.get('/users' , (req, res) => {
+router.get('/users' , permissao, (req, res) => {
 	sql.query("SELECT * from usuario", (err, results, fields) => {
 		res.render('admin/select',{data: results});
 	})
