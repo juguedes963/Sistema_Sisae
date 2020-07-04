@@ -25,24 +25,24 @@ router.get('/', permissao, (req, res) => {
 	res.render('admin/index');
 });
 
-router.get('/alunos', (req,res) => {
+router.get('/alunos', permissao, (req,res) => {
 	sql.query("SELECT * FROM turma", (err, results, fields) => {
 		res.render('admin/addAluno',{turmas: results});
 	})
 })
 
-router.get('/alunos/ver', (req,res) => {
+router.get('/alunos/ver', permissao, (req,res) => {
 	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id)", (err, results, fields) => {
 		res.render('admin/listaAlunos',{data: results});
 	})
 })
 
-router.get('/alunos/deletar/:id', (req,res) => {
-	sql.query("DELETE FROM alunos WHERE matricula=?", [req.params.id]);
+router.get('/alunos/deletar/:id', permissao, (req,res) => {
+	sql.query("DELETE FROM alunos WHpermissao, ERE matricula=?", [req.params.id]);
 	res.render('admin');
 })
 
-router.get('/turmas', (req,res) => {
+router.get('/turmas', permissao, (req,res) => {
 	sql.query("SELECT * FROM turma", (err, results, fields) => {
 		res.render('admin/addTurma',{turmas: results});
 	})
@@ -54,7 +54,7 @@ router.get('/users' , permissao, (req, res) => {
 	})
 })
 
-router.get('/users/deletar/:id', (req,res) => {
+router.get('/users/deletar/:id', permissao, (req,res) => {
 	sql.query("DELETE FROM usuario WHERE id=?", [req.params.id]);
 	res.render('admin');
 })
