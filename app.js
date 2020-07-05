@@ -1,5 +1,7 @@
 //Definindo os módulos necessários para trabalhar com o nodes
 const express = require('express');
+var rotas = require('./routes/routes');
+var admin = require('./routes/admin');
 const handlebars = require('express-handlebars');
 const path = require("path");
 const bodyParser = require('body-parser');
@@ -50,12 +52,9 @@ const app = express();
 
 
 
-//Chamando as rotas dinâmicas
-var rotas = require('./routes/routes');
+//Rotas
 app.use('/', rotas);
-
-var rotas_adm = require('./routes/admin');
-app.use('/admin', rotas_adm);
+app.use('/admin', admin);
 
 app.listen(8081, (req,res) => {
 	console.log("O servidor está rodando!")
