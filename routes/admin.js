@@ -48,6 +48,12 @@ router.get('/turmas', permissao, (req,res) => {
 	})
 })
 
+router.get('/turmas/ver', permissao, (req,res) => {
+	sql.query("SELECT * FROM turma", (err, results, fields) => {
+		res.render('admin/listaTurmas',{data: results});
+	})
+})
+
 router.get('/users' , permissao, (req, res) => {
 	sql.query("SELECT * from usuario", (err, results, fields) => {
 		res.render('admin/select',{data: results});
