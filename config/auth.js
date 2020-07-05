@@ -1,6 +1,5 @@
 const localStrategy = require("passport-local").Strategy;
 const mysql = require('mysql');
-const bcrypt = require("bcryptjs");
 const sql = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
@@ -11,7 +10,6 @@ sql.query('use sisae');
 
 
 module.exports = function(passport){
-
 	passport.use(new localStrategy({usernameField:'username', passwordField:'senha'}, (user, senha, done) => {
 		sql.query("SELECT * FROM usuario WHERE username=? and senha=?", [user,senha], (err, rows) => {
 			if(rows.length > 0){
