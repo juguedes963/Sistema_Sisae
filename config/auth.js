@@ -15,7 +15,7 @@ module.exports = function(passport){
 			if(rows.length > 0){
 				return done(null, rows)
 			}else {
-				return done(null, false, {message: "Dados não encontrados!"})
+				return done(null, false, {message: "Login e/ou senha incorretos!"})
 			}
 		})
 
