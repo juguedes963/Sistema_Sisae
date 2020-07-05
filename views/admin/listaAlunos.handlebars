@@ -1,38 +1,22 @@
 <div class="container">
 	
-	<div class="table-responsive my-5">
+	<h5 class="text-center display-4 my-3">Lista de alunos</h5>
+	
+	{{#data}}
+
+	
 		
-		<table class="table table-hover text-center">
-			<caption>List of students</caption>
-			  <thead class="thead-dark">
-			    <tr>
-			      <th scope="col">Matrícula</th>
-			      <th scope="col">Aluno</th>
-			      <th scope="col">Turma</th>
-			      <th scope="col">Opções</th>
-			    </tr>
-			  </thead>
-			  {{#data}}
-			  <tbody>
-		    <tr>
-		      <th scope="row">{{matricula}}</th>
-		      <td>{{nome}}</td>
-		      <td>{{codigo}}</td>
-		      <td>
-		      	<a href='update/{{id}}'>
-		      		<img src="../../img/editar.png" width="30">
-		      	</a>
-		      	<a href='../alunos/deletar/{{matricula}}'>
-		      		<img src="../../img/deletar.png" width="30" class='js-delete'>
-		      	</a>
-		      </td>
-		    </tr>
-		  </tbody>
-		  {{/data}}
-			
-		</table>
-
-
+	<div class="card mb-3">
+		<div class="card-body">
+			<h5 class="card-title">{{nome}}</h5>
+			<p class="lead">{{codigo}}</p>
+			<small>Entrou em: {{#formatDate entrada}}{{/formatDate}}</small>
+			<hr>
+		</div>
 	</div>
-
+		
+	
+		  
+	{{/data}}
+					
 </div>
