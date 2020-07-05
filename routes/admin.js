@@ -69,6 +69,10 @@ router.post('/alunos/add', urlencodeParser, (req, res) => {
 		erros.push({text: "Erro: Nome inválido!"})
 	}
 
+	if(!req.body.entrada || req.body.entrada == null || typeof req.body.entrada == undefined){
+		erros.push({text: "Erro: Data inválida!"})
+	}
+
 	if(req.body.nome.length < 2){
 		erros.push({text: "Erro: Nome muito curto!"})
 	}
@@ -76,7 +80,7 @@ router.post('/alunos/add', urlencodeParser, (req, res) => {
 	if(erros.length > 0){
 		res.render("admin/addAluno", {erros: erros})
 	}else{
-		sql.query("INSERT INTO alunos VALUES (?,?,?)", [req.matricula, req.body.nome, req.body.turma]);
+		sql.query("INSERT INTO alunos VALUES (?,?,?,?)", [req.matricula, req.body.nome, req.body.turma, req.body.entrada]);
 		res.render('index');
 	}
 })

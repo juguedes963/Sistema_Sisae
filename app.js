@@ -7,6 +7,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 require("./config/auth")(passport);
+const moment = require('moment')
 
 const app = express();
 
@@ -37,7 +38,11 @@ const app = express();
 	app.use(bodyParser.json());
 
 	//Template engine
-	app.engine("handlebars",handlebars({defaultLayout:'main'}));
+	app.engine("handlebars",handlebars({defaultLayout:'main',  helpers: {
+          formatDate: (date) => {
+               return moment(date).format('DD/MM/YYYY')
+           }
+      }}));
 	app.set("view engine",'handlebars');
 
 	//Public

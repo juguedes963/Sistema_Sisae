@@ -34,9 +34,9 @@ router.get('/login', (req, res) => {
 	res.render('login');
 });
 
-router.get('/select', (req,res) => {
+router.get('/alunos', (req,res) => {
 	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id)", (err, results, fields) => {
-		res.render('select', {data: results});
+		res.render('alunos', {data: results});
 	});
 })
 
