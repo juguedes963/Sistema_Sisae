@@ -26,7 +26,7 @@ router.get('/', permissao, (req, res) => {
 });
 
 router.get('/alunos', permissao, (req,res) => {
-	sql.query("SELECT * FROM turma", (err, results, fields) => {
+	sql.query("SELECT * FROM turma order by codigo", (err, results, fields) => {
 		res.render('admin/addAluno',{turmas: results});
 	})
 })
@@ -43,9 +43,9 @@ router.get('/alunos/deletar/:id', permissao, (req,res) => {
 })
 
 router.get('/turmas', permissao, (req,res) => {
-	sql.query("SELECT * FROM turma", (err, results, fields) => {
-		res.render('admin/addTurma',{turmas: results});
-	})
+	
+		res.render('admin/addTurma');
+	
 })
 
 router.get('/turmas/ver', permissao, (req,res) => {
