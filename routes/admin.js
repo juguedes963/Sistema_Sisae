@@ -49,7 +49,7 @@ router.get('/turmas', permissao, (req,res) => {
 })
 
 router.get('/turmas/ver', permissao, (req,res) => {
-	sql.query("SELECT * FROM turma", (err, results, fields) => {
+	sql.query("SELECT * FROM turma order by codigo", (err, results, fields) => {
 		res.render('admin/listaTurmas',{data: results});
 	})
 })
