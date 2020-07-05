@@ -39,10 +39,10 @@ const app = express();
 
 	//Template engine
 	app.engine("handlebars",handlebars({defaultLayout:'main',  helpers: {
-          formatDate: (date) => {
-               return moment(date).format('DD/MM/YYYY')
-           }
-      }}));
+      formatDate: (date) => {
+           return moment(date).format('DD/MM/YYYY')
+       }
+     }}));
 	app.set("view engine",'handlebars');
 
 	//Public
