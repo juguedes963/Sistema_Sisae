@@ -27,13 +27,13 @@ router.get('/', permissao, (req, res) => {
 
 router.get('/alunos', permissao, (req,res) => {
 	sql.query("SELECT * FROM turma order by codigo", (err, results, fields) => {
-		res.render('admin/addAluno',{turmas: results});
+		res.render('admin/alunos/addAluno',{turmas: results});
 	})
 })
 
 router.get('/alunos/ver', permissao, (req,res) => {
 	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id)", (err, results, fields) => {
-		res.render('admin/listaAlunos',{data: results});
+		res.render('admin/alunos/listaAlunos',{data: results});
 	})
 })
 
@@ -44,20 +44,20 @@ router.get('/alunos/deletar/:id', permissao, (req,res) => {
 
 router.get('/alunos/editar/:id', permissao ,(req,res) => {
 	sql.query("SELECT * FROM alunos INNER JOIN turma WHERE matricula = ? order by codigo", [req.params.id],  (err, results, fields) => {
-		res.render('admin/editAluno',{matricula: req.params.id, turmas: results, nome: results[0].nome, codigo: results[0].codigo, entrada: results[0].entrada});
+		res.render('admin/alunos/editAluno',{matricula: req.params.id, turmas: results, nome: results[0].nome, codigo: results[0].codigo, entrada: results[0].entrada});
 	})	
 	
 })
 
 router.get('/turmas', permissao, (req,res) => {
 	
-		res.render('admin/addTurma');
+		res.render('admin/turmas/addTurma');
 	
 })
 
 router.get('/turmas/ver', permissao, (req,res) => {
 	sql.query("SELECT * FROM turma order by codigo", (err, results, fields) => {
-		res.render('admin/listaTurmas',{data: results});
+		res.render('admin/turmas/listaTurmas',{data: results});
 	})
 })
 
