@@ -42,6 +42,13 @@ router.get('/alunos/deletar/:id', permissao, (req,res) => {
 	res.render('admin');
 })
 
+router.get('/alunos/editar/:id', permissao ,(req,res) => {
+	sql.query("SELECT * FROM alunos INNER JOIN turma WHERE matricula = ? order by codigo", [req.params.id],  (err, results, fields) => {
+		res.render('admin/editAluno',{matricula: req.params.id, turmas: results, nome: results[0].nome, codigo: results[0].codigo, entrada: results[0].entrada});
+	})	
+	
+})
+
 router.get('/turmas', permissao, (req,res) => {
 	
 		res.render('admin/addTurma');
@@ -89,6 +96,11 @@ router.post('/alunos/add', urlencodeParser, (req, res) => {
 		sql.query("INSERT INTO alunos VALUES (?,?,?,?)", [req.matricula, req.body.nome, req.body.turma, req.body.entrada]);
 		res.render('index');
 	}
+})
+
+router.post('/alunos/edit', urlencodeParser, (req, res) => {
+	sql.query("UPDATE alunos set nome=?, turma=?, entrada=? WHERE matricula=?", [req.body.nome, req.body.turma, req.body.entrada, req.body.matricula]);
+	res.render('index');
 })
 
 router.post('/turmas/add', urlencodeParser, (req, res) => {

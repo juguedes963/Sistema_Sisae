@@ -1,0 +1,39 @@
+<div class="container">
+<h5 class="text-center display-4 my-5">Editar aluno</h5>
+
+	{{#each erros}}
+		{{>_error}}
+	{{else}}
+	{{/each}}
+	
+<div class="card bg-light">
+	<div class="card-body mb-15">
+		<form action="../../alunos/edit" method="POST">
+			
+			<div class="form-group">
+				<label for="nome">Nome:</label>
+				<input type="text" id="nome" name="nome" placeholder="Nome" class="form-control" autocomplete="off"  value="{{nome}}" required>
+				<input type="hidden" id="matricula" name="matricula" value="{{matricula}}" required>
+			</div>
+
+			<div class="form-group">
+				<label for="turma">Turma:</label>
+				<select name="turma" class="custom-select">
+					{{#each turmas}}
+					<option value="{{id}}">{{codigo}}</option>
+					{{else}}
+					<option value="0">Nenhuma turma registrada</option>
+					{{/each}}
+				
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="data-entrada">Data de entrada:</label>
+				<input type="date" name="entrada" id="entrada" class="form-control" value="{{entrada}}">
+			</div>
+			<button type="submit" class="btn btn-success mt-4"><i class="fa fa-check mr-2"></i>Editar Aluno</button>
+		</form>
+	</div>
+</div>
+</div>
