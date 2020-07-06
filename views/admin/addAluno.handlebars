@@ -1,11 +1,11 @@
 <div class="container">
-<h5 class="text-center display-4 my-5">Cadastrar aluno</h5>
+<h5 class="text-center display-4 my-4">Cadastrar aluno</h5>
 
 	{{#each erros}}
 		{{>_error}}
 	{{else}}
 	{{/each}}
-	
+
 <div class="card bg-light">
 	<div class="card-body mb-15">
 		<form action="alunos/add" method="POST">
@@ -32,7 +32,9 @@
 				<input type="date" name="entrada" id="entrada" class="form-control">
 			</div>
 			<button type="submit" class="btn btn-success mt-4"><i class="fa fa-check mr-2"></i>Cadastrar Aluno</button>
+			<a href="/admin/alunos/ver" class="btn btn-info mt-4"><i class="fa fa-search mr-2"></i>Ver Alunos</a>
 		</form>
 	</div>
 </div>
+
 </div>
