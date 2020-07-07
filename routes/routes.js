@@ -35,7 +35,7 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/alunos', (req,res) => {
-	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id)", (err, results, fields) => {
+	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) order by nome", (err, results, fields) => {
 		res.render('general/alunos', {data: results});
 	});
 })

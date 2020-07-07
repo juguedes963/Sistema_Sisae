@@ -32,7 +32,7 @@ router.get('/alunos', permissao, (req,res) => {
 })
 
 router.get('/alunos/ver', permissao, (req,res) => {
-	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id)", (err, results, fields) => {
+	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) order by nome", (err, results, fields) => {
 		res.render('admin/alunos/listaAlunos',{data: results});
 	})
 })
@@ -69,7 +69,7 @@ router.get('/turmas/ver', permissao, (req,res) => {
 })
 
 router.get('/turma/ver/:id', permissao, (req,res) => {
-	sql.query("SELECT * FROM turma INNER JOIN alunos ON (alunos.turma = turma.id) WHERE id=?", [req.params.id], (err, results, fields) => {
+	sql.query("SELECT * FROM turma INNER JOIN alunos ON (alunos.turma = turma.id) WHERE id=? order by nome", [req.params.id], (err, results, fields) => {
 		if(results.length > 0){
 			res.render('admin/turmas/verTurma',{data: results, codigo: results[0].codigo});
 		}else {
