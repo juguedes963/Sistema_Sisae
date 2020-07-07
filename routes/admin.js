@@ -61,6 +61,12 @@ router.get('/turmas/ver', permissao, (req,res) => {
 	})
 })
 
+router.get('/turma/ver/:id', permissao, (req,res) => {
+	sql.query("SELECT * FROM turma INNER JOIN alunos ON (alunos.turma = turma.id) WHERE id=?", [req.params.id], (err, results, fields) => {
+		res.render('admin/turmas/verTurma',{data: results});
+	})
+})
+
 router.get('/users' , permissao, (req, res) => {
 	sql.query("SELECT * from usuario", (err, results, fields) => {
 		res.render('admin/select',{data: results});
