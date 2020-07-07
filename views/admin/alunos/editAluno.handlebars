@@ -17,6 +17,11 @@
 			</div>
 
 			<div class="form-group">
+				<label for="foto">Foto:</label>
+				<input type="text" id="foto" name="foto" placeholder="Inserir url da imagem aqui" class="form-control" autocomplete="off" value={{foto}}>
+			</div>
+
+			<div class="form-group">
 				<label for="turma">Turma:</label>
 				<select name="turma" class="custom-select">
 					{{#each turmas}}
@@ -32,6 +37,7 @@
 				<label for="data-entrada">Data de entrada:</label>
 				<input type="date" name="entrada" id="entrada" class="form-control" value="{{entrada}}">
 			</div>
+
 			<button type="submit" class="btn btn-success mt-4"><i class="fa fa-check mr-2"></i>Editar Aluno</button>
 		</form>
 	</div>

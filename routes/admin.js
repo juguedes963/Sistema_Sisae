@@ -110,13 +110,13 @@ router.post('/alunos/add', urlencodeParser, (req, res) => {
 	if(erros.length > 0){
 		res.render("admin/addAluno", {erros: erros})
 	}else{
-		sql.query("INSERT INTO alunos VALUES (?,?,?,?)", [req.matricula, req.body.nome, req.body.turma, req.body.entrada]);
+		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.matricula, req.body.nome,req.body.foto, req.body.turma, req.body.entrada]);
 		res.render('index');
 	}
 })
 
 router.post('/alunos/edit', urlencodeParser, (req, res) => {
-	sql.query("UPDATE alunos set nome=?, turma=?, entrada=? WHERE matricula=?", [req.body.nome, req.body.turma, req.body.entrada, req.body.matricula]);
+	sql.query("UPDATE alunos set nome=?, foto=?, turma=?, entrada=? WHERE matricula=?", [req.body.nome, req.body.foto, req.body.turma, req.body.entrada, req.body.matricula]);
 	res.render('index');
 })
 
