@@ -37,6 +37,7 @@ router.get('/alunos/ver', permissao, (req,res) => {
 	})
 })
 
+
 router.get('/alunos/deletar/:id', permissao, (req,res) => {
 	sql.query("DELETE FROM alunos WHERE matricula=?", [req.params.id]);
 	res.render('admin');

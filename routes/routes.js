@@ -40,6 +40,12 @@ router.get('/alunos', (req,res) => {
 	});
 })
 
+router.get('/alunos/ver/:id', (req,res) => {
+	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) WHERE matricula=?", [req.params.id], (err, results, fields) => {
+		res.render('verAluno',{data: results});
+	})
+})
+
 router.get('/logout', (req,res) => {
 	req.logout();
 	res.redirect('/')
