@@ -26,23 +26,23 @@ router.get('/', (req, res) => {
 });
 
 router.get('/create', (req, res) => {
-	res.render('create');
+	res.render('general/create');
 });
 
 
 router.get('/login', (req, res) => {
-	res.render('login');
+	res.render('general/login');
 });
 
 router.get('/alunos', (req,res) => {
 	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id)", (err, results, fields) => {
-		res.render('alunos', {data: results});
+		res.render('general/alunos', {data: results});
 	});
 })
 
 router.get('/alunos/ver/:id', (req,res) => {
 	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) WHERE matricula=?", [req.params.id], (err, results, fields) => {
-		res.render('verAluno',{data: results});
+		res.render('general/verAluno',{data: results});
 	})
 })
 
