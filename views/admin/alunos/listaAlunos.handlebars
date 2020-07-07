@@ -1,22 +1,13 @@
 <div class="container">
-	
-	<h1 class="text-center my-4">Lista de alunos</h1>
-	
-	{{#data}}
+	<h1 class="text-center my-4">Lista de alunos:</h1>
+	<div class="card">
+		<div class="card-body bg-light">
+			<hr>	
 
-	<div class="card mb-3">
-		<div class="card-body">
-			<h5 class="card-title">{{nome}}</h5>
-			<p class="lead">{{codigo}}</p>
-			<small>Entrou em: {{#formatDate entrada}}{{/formatDate}}</small>
-			<hr>
-			<a href="../alunos/editar/{{matricula}}" class="btn btn-success">Editar</a>
-			<a href="../alunos/deletar/{{matricula}}" class="btn btn-danger">Remover</a>
+			{{#each data}}
+				<a href="../../admin/aluno/ver/{{matricula}}"><p class="lead">{{nome}}</p></a>
+			{{else}}
+			{{/each}}
 		</div>
 	</div>
-		
-	
-		  
-	{{/data}}
-					
 </div>

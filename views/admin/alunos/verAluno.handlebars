@@ -1,0 +1,22 @@
+<div class="container">
+	
+	<h1 class="text-center my-4">Informações sobre o aluno</h1>
+	
+	{{#data}}
+
+	<div class="card mb-3">
+		<div class="card-body">
+			<h5 class="card-title">{{nome}}</h5>
+			<p class="lead">{{codigo}}</p>
+			<small>Entrou em: {{#formatDate entrada}}{{/formatDate}}</small>
+			<hr>
+			<a href="../../alunos/editar/{{matricula}}" class="btn btn-success">Editar</a>
+			<a href="../../alunos/deletar/{{matricula}}" class="btn btn-danger">Remover</a>
+		</div>
+	</div>
+		
+	
+		  
+	{{/data}}
+					
+</div>

@@ -49,6 +49,12 @@ router.get('/alunos/editar/:id', permissao ,(req,res) => {
 	
 })
 
+router.get('/aluno/ver/:id', permissao, (req,res) => {
+	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) WHERE matricula=?", [req.params.id], (err, results, fields) => {
+		res.render('admin/alunos/verAluno',{data: results});
+	})
+})
+
 router.get('/turmas', permissao, (req,res) => {
 	
 		res.render('admin/turmas/addTurma');
