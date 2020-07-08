@@ -11,7 +11,7 @@ const passport = require("passport");
 require("./config/auth")(passport);
 const moment = require('moment');
 var multer  = require('multer');
-var upload = multer({ dest: 'uploads/' })
+var upload = multer({ dest: './public/uploads/' })
 
 const app = express();
 
