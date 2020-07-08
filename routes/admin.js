@@ -110,7 +110,7 @@ router.post('/alunos/add', urlencodeParser, (req, res) => {
 	if(erros.length > 0){
 		res.render("admin/addAluno", {erros: erros})
 	}else{
-		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.matricula, req.body.nome,req.body.foto, req.body.turma, req.body.entrada]);
+		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.matricula, req.body.nome, req.body.turma, req.body.entrada,req.body.foto]);
 		res.render('index');
 	}
 })
