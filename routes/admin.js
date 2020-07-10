@@ -13,6 +13,20 @@ const sql = mysql.createConnection({
 sql.query('use sisae');
 const {permissao} = require("../helpers/permissao")
 
+var multer  = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads')
+  },
+  filename: function (req, file, cb) {
+    //const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    var ext = file.originalname.substr(file.originalname.lastIndexOf('.') + 1)
+    cb(null, file.fieldname + '-' + Date.now() + '.' + ext)
+  }
+})
+
+var upload = multer({ storage: storage })
+
 /* ======= Definindo rotas via GET e POST =======*/
 
 
@@ -91,8 +105,8 @@ router.get('/users/deletar/:id', permissao, (req,res) => {
 
 /* ======= POST =======*/
 
-router.post('/alunos/add', urlencodeParser, (req, res) => {
-
+router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, next) => {
+	console.log(req.file.filename)
 	var erros = [];
 
 	if(!req.body.nome || req.body.nome == null || typeof req.body.nome == undefined){
@@ -110,13 +124,13 @@ router.post('/alunos/add', urlencodeParser, (req, res) => {
 	if(erros.length > 0){
 		res.render("admin/addAluno", {erros: erros})
 	}else{
-		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.matricula, req.body.nome, req.body.turma, req.body.entrada,req.body.foto]);
+		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.matricula, req.body.nome, req.body.turma, req.body.entrada,req.file.filename]);
 		res.render('index');
 	}
 })
 
 router.post('/alunos/edit', urlencodeParser, (req, res) => {
-	sql.query("UPDATE alunos set nome=?, foto=?, turma=?, entrada=? WHERE matricula=?", [req.body.nome, req.body.foto, req.body.turma, req.body.entrada, req.body.matricula]);
+	sql.query("UPDATE alunos set nome=?, turma=?, entrada=? WHERE matricula=?", [req.body.nome, req.body.turma, req.body.entrada, req.body.matricula]);
 	res.render('index');
 })
 
