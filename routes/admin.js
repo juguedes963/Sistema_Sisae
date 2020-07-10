@@ -124,7 +124,7 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 	if(erros.length > 0){
 		res.render("admin/addAluno", {erros: erros})
 	}else{
-		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.matricula, req.body.nome, req.body.turma, req.body.entrada,req.file.filename]);
+		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.body.matricula, req.body.nome, req.body.turma, req.body.entrada,req.file.filename]);
 		res.render('index');
 	}
 })
