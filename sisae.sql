@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `alunos`
 --
 
-CREATE TABLE `alunos` (
+CREATE TABLE `alunos`(
   `matricula` int(11) NOT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `turma` int(11) DEFAULT NULL,
