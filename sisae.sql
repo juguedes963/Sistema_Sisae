@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Jul-2020 às 02:57
+-- Tempo de geração: 12-Jul-2020 às 01:17
 -- Versão do servidor: 10.4.13-MariaDB
 -- versão do PHP: 7.3.19
 
@@ -27,9 +27,11 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `alunos`
 --
 
-CREATE TABLE `alunos`(
+CREATE TABLE `alunos` (
   `matricula` int(11) NOT NULL,
   `nome` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `nascimento` date DEFAULT NULL,
   `turma` int(11) DEFAULT NULL,
   `entrada` date DEFAULT NULL,
   `foto` varchar(255) DEFAULT NULL
@@ -39,9 +41,9 @@ CREATE TABLE `alunos`(
 -- Extraindo dados da tabela `alunos`
 --
 
-INSERT INTO `alunos` (`matricula`, `nome`, `turma`, `entrada`, `foto`) VALUES
-(20201956, 'Febronio Barriga Gordorrítua', 1, '2018-02-05', 'foto-1594428803231.jpg'),
-(20201957, 'Frederico Matalascallando Corcuera', 1, '2018-02-05', 'foto-1594428952550.jpg');
+INSERT INTO `alunos` (`matricula`, `nome`, `email`, `nascimento`, `turma`, `entrada`, `foto`) VALUES
+(20201956, 'Febronio Barriga Gordorrítua', 'nhonho_pesado@gmail.com', '2002-03-06', 1, '2018-02-05', 'foto-1594428803231.jpg'),
+(20201957, 'Frederico Matalascallando Corcuera', 'quico_rarara@gmail.com', '2002-06-06', 2, '2018-02-05', 'foto-1594428952550.jpg');
 
 -- --------------------------------------------------------
 
@@ -59,7 +61,8 @@ CREATE TABLE `turma` (
 --
 
 INSERT INTO `turma` (`id`, `codigo`) VALUES
-(1, 'AA18');
+(1, 'AA18'),
+(2, 'AB18');
 
 -- --------------------------------------------------------
 
@@ -80,18 +83,12 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `email`, `username`, `senha`, `permissao`) VALUES
-(1, 'zenon_barriga@gmail.com', 'Seu Barriga', 0, 1);
+(1, 'zenon_barriga@gmail.com', 'Seu Barriga', 0, 1),
+(2, 'bigo_rodonir@gmail.com', 'Bigo', 0, 0);
 
 --
 -- Índices para tabelas despejadas
 --
-
---
--- Índices para tabela `alunos`
---
-ALTER TABLE `alunos`
-  ADD PRIMARY KEY (`matricula`),
-  ADD KEY `fk_turma` (`turma`);
 
 --
 -- Índices para tabela `turma`
@@ -113,23 +110,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `turma`
 --
 ALTER TABLE `turma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Restrições para despejos de tabelas
---
-
---
--- Limitadores para a tabela `alunos`
---
-ALTER TABLE `alunos`
-  ADD CONSTRAINT `fk_turma` FOREIGN KEY (`turma`) REFERENCES `turma` (`id`);
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

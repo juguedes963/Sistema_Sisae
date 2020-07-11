@@ -130,7 +130,7 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 })
 
 router.post('/alunos/edit', urlencodeParser, (req, res) => {
-	sql.query("UPDATE alunos set nome=?, turma=?, entrada=?, email=? WHERE matricula=?", [req.body.nome, req.body.turma, req.body.entrada, req.body.email, req.body.matricula]);
+	sql.query("UPDATE alunos set nome=?, turma=?, entrada=? WHERE matricula=?", [req.body.nome, req.body.turma, req.body.entrada, req.body.matricula]);
 	res.render('index');
 })
 
