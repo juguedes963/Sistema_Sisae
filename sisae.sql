@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 12-Jul-2020 às 01:17
+-- Tempo de geração: 13-Jul-2020 às 00:04
 -- Versão do servidor: 10.4.13-MariaDB
 -- versão do PHP: 7.3.19
 
@@ -42,8 +42,10 @@ CREATE TABLE `alunos` (
 --
 
 INSERT INTO `alunos` (`matricula`, `nome`, `email`, `nascimento`, `turma`, `entrada`, `foto`) VALUES
-(20201956, 'Febronio Barriga Gordorrítua', 'nhonho_pesado@gmail.com', '2002-03-06', 1, '2018-02-05', 'foto-1594428803231.jpg'),
-(20201957, 'Frederico Matalascallando Corcuera', 'quico_rarara@gmail.com', '2002-06-06', 2, '2018-02-05', 'foto-1594428952550.jpg');
+(20201956, 'Febronio Barriga Gordorrítua', 'nhonho_pesado@gmail.com', '2001-03-03', 1, '2018-02-05', 'foto-1594590637099.jpg'),
+(20201957, 'Frederico Matalascallando Corcuera', 'quico_rarara@gmail.com', '2002-06-06', 2, '2018-02-05', 'foto-1594428952550.jpg'),
+(20201958, 'Godínez', 'godinez@gmail.com', '2002-02-01', 3, '2018-02-05', 'foto-1594591315275.jpg'),
+(20201959, 'Patricia Jiménez', 'paty@gmail.com', '2002-09-17', 3, '2018-02-05', 'foto-1594591459904.jpg');
 
 -- --------------------------------------------------------
 
@@ -62,7 +64,8 @@ CREATE TABLE `turma` (
 
 INSERT INTO `turma` (`id`, `codigo`) VALUES
 (1, 'AA18'),
-(2, 'AB18');
+(2, 'AB18'),
+(3, 'AC18');
 
 -- --------------------------------------------------------
 
@@ -110,7 +113,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `turma`
 --
 ALTER TABLE `turma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
