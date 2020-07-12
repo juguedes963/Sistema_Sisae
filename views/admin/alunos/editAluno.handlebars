@@ -8,7 +8,7 @@
 	
 <div class="card bg-light">
 	<div class="card-body mb-15">
-		<form action="../../alunos/edit" method="POST">
+		<form action="../../alunos/edit" enctype="multipart/form-data" method="POST">
 			
 			<div class="form-group">
 				<label for="nome">Nome:</label>
@@ -30,9 +30,30 @@
 			</div>
 
 			<div class="form-group">
-				<label for="data-entrada">Data de entrada:</label>
-				<input type="date" name="entrada" id="entrada" class="form-control" value="{{entrada}}">
+				<label for="foto">Foto:</label>
+			    <input type="file" class="form-control-file" name="foto" value={{foto}}>           
 			</div>
+
+			<div class="row">
+				
+				<div class="col">
+					<div class="form-group">
+						<label for="data-entrada">Data de entrada:</label>
+						<input type="date" name="entrada" id="entrada" class="form-control" value="{{entrada}}">
+					</div>
+				</div>
+
+
+				<div class="col">
+					<div class="form-group">
+						<label for="data">Data de nascimento:</label>
+						<input type="date" name="nascimento" id="nascimento" class="form-control" value="{{nascimento}}">
+					</div>
+				</div>
+
+			</div>
+
+			
 
 			<button type="submit" class="btn btn-success mt-4"><i class="fa fa-check mr-2"></i>Editar Aluno</button>
 		</form>
