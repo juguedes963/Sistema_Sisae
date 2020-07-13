@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Jul-2020 às 00:04
+-- Tempo de geração: 13-Jul-2020 às 18:16
 -- Versão do servidor: 10.4.13-MariaDB
 -- versão do PHP: 7.3.19
 
@@ -44,7 +44,7 @@ CREATE TABLE `alunos` (
 INSERT INTO `alunos` (`matricula`, `nome`, `email`, `nascimento`, `turma`, `entrada`, `foto`) VALUES
 (20201956, 'Febronio Barriga Gordorrítua', 'nhonho_pesado@gmail.com', '2001-03-03', 1, '2018-02-05', 'foto-1594590637099.jpg'),
 (20201957, 'Frederico Matalascallando Corcuera', 'quico_rarara@gmail.com', '2002-06-06', 2, '2018-02-05', 'foto-1594428952550.jpg'),
-(20201958, 'Godínez', 'godinez@gmail.com', '2002-02-01', 3, '2018-02-05', 'foto-1594591315275.jpg'),
+(20201958, 'Godínez', 'godinez@gmail.com', '2001-02-01', 3, '2018-02-05', 'foto-1594656951709.jpg'),
 (20201959, 'Patricia Jiménez', 'paty@gmail.com', '2002-09-17', 3, '2018-02-05', 'foto-1594591459904.jpg');
 
 -- --------------------------------------------------------
@@ -77,7 +77,7 @@ CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
   `email` varchar(50) NOT NULL,
   `username` varchar(25) NOT NULL,
-  `senha` int(25) NOT NULL,
+  `senha` varchar(25) NOT NULL,
   `permissao` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -86,8 +86,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `email`, `username`, `senha`, `permissao`) VALUES
-(1, 'zenon_barriga@gmail.com', 'Seu Barriga', 0, 1),
-(2, 'bigo_rodonir@gmail.com', 'Bigo', 0, 0);
+(1, 'zenon_barriga@gmail.com', 'Seu Barriga', 'pagueoaluguel', 1),
+(2, 'bigo_rodonir@gmail.com', 'Bigo', 'bigo123', 0);
 
 --
 -- Índices para tabelas despejadas
