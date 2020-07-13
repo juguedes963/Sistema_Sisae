@@ -17,6 +17,12 @@
 						<input type="text" id="nome" name="nome" placeholder="Nome" class="form-control" autocomplete="off" required>
 					</div>
 				</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="matricula">Matrícula:</label>
+						<input type="text" id="matricula" name="matricula" placeholder="Matrícula" class="form-control" autocomplete="off" required>
+					</div>
+				</div>
 				
 			</div>
 
@@ -24,46 +30,43 @@
 
 				<div class="col">
 					<div class="form-group">
-						<label for="matricula">Matrícula:</label>
-						<input type="text" id="matricula" name="matricula" placeholder="Matrícula" class="form-control" autocomplete="off" required>
+						<label for="turma">Turma:</label>
+						<select name="turma" class="custom-select">
+							{{#each turmas}}
+							<option value="{{id}}">{{codigo}}</option>
+							{{else}}
+							<option value="0">Nenhuma turma registrada</option>
+							{{/each}}
+						
+						</select>
 					</div>
 				</div>
 
 				<div class="col">
 					<div class="form-group">
-					<label for="turma">Turma:</label>
-					<select name="turma" class="custom-select">
-						{{#each turmas}}
-						<option value="{{id}}">{{codigo}}</option>
-						{{else}}
-						<option value="0">Nenhuma turma registrada</option>
-						{{/each}}
-					
-					</select>
-				</div>
+						<label for="foto">Foto:</label>
+					    <input type="file" class="form-control-file" name="foto">           
+					</div>
 				</div>
 			</div>
 
-			<div class="form-group">
-				<label for="foto">Foto:</label>
-			    <input type="file" class="form-control-file" name="foto">           
-			</div>
+			
 			
 			<div class="row">
 
-			<div class="col">
-				<div class="form-group">
-					<label for="data-nasc">Data de nascimento:</label>
-					<input type="date" name="nascimento" id="nascimento" class="form-control">
+				<div class="col">
+					<div class="form-group">
+						<label for="data-nasc">Data de nascimento:</label>
+						<input type="date" name="nascimento" id="nascimento" class="form-control">
+					</div>
 				</div>
-			</div>
 
-			<div class="col">
-				<div class="form-group">
-					<label for="data-entrada">Data de entrada:</label>
-					<input type="date" name="entrada" id="entrada" class="form-control">
+				<div class="col">
+					<div class="form-group">
+						<label for="data-entrada">Data de entrada:</label>
+						<input type="date" name="entrada" id="entrada" class="form-control">
+					</div>
 				</div>
-			</div>
 			</div>
 
 			<button type="submit" class="btn btn-success mt-4"><i class="fa fa-check mr-2"></i>Cadastrar Aluno</button>
