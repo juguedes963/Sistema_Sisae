@@ -134,6 +134,7 @@ router.post('/alunos/edit', urlencodeParser, upload.single('foto'), (req, res, n
 	res.render('index');
 })
 
+
 router.post('/turmas/add', urlencodeParser, (req, res) => {
 
 	var erros = [];
@@ -153,5 +154,6 @@ router.post('/turmas/add', urlencodeParser, (req, res) => {
 		res.render('index');
 	}
 })
+
 
 module.exports = router;

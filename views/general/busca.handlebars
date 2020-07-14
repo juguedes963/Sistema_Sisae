@@ -1,0 +1,12 @@
+<div class="container">
+	<h1 class="text-center my-4">Lista de alunos:</h1>
+	<div class="card">
+		<div class="card-body bg-light">
+			<hr>	
+			{{#each data}}
+				<a href="../alunos/ver/{{matricula}}"><p class="lead">{{nome}}</p></a>
+			{{else}}
+			{{/each}}
+		</div>
+	</div>
+</div>

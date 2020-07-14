@@ -98,7 +98,11 @@ router.post('/login', (req, res, next) => {
 })
 
 
-
+router.post('/alunos/buscar', urlencodeParser, (req,res) => {
+	sql.query("SELECT * from alunos WHERE nome LIKE '%" + req.body.search + "%'", (err, results, fields) => {
+		res.render('general/busca', {data: results})
+	})
+})
 
 
 module.exports = router;
