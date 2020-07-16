@@ -106,7 +106,6 @@ router.get('/users/deletar/:id', permissao, (req,res) => {
 /* ======= POST =======*/
 
 router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, next) => {
-	console.log(req.file.filename)
 	var erros = [];
 
 	if(!req.body.nome || req.body.nome == null || typeof req.body.nome == undefined){
