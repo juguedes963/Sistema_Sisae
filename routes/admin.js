@@ -107,6 +107,7 @@ router.get('/users/deletar/:id', permissao, (req,res) => {
 
 router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, next) => {
 	var erros = [];
+	var success = [];
 
 	if(!req.body.nome || req.body.nome == null || typeof req.body.nome == undefined){
 		erros.push({text: "Erro: Nome inválido!"})
@@ -123,8 +124,9 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 	if(erros.length > 0){
 		res.render("admin/addAluno", {erros: erros})
 	}else{
+		success.push({text:"Estudante registrado(a) com sucesso!"})
 		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?,?)", [req.body.matricula, req.body.nome, req.body.nascimento, req.body.turma, req.body.entrada,req.file.filename]);
-		res.render('index');
+		res.render('index',{success: success});
 	}
 })
 
@@ -137,6 +139,7 @@ router.post('/alunos/edit', urlencodeParser, upload.single('foto'), (req, res, n
 router.post('/turmas/add', urlencodeParser, (req, res) => {
 
 	var erros = [];
+	var success = [];
 
 	if(!req.body.codigo || req.body.codigo == null || typeof req.body.codigo == undefined){
 		erros.push({text: "Erro: Turma inválida!"})
@@ -147,10 +150,11 @@ router.post('/turmas/add', urlencodeParser, (req, res) => {
 	}
 
 	if(erros.length > 0){
-		res.render("admin/addTurma", {erros: erros})
+		res.render("admin/turmas/addTurma", {erros: erros})
 	}else {
+		success.push({text: "Turma cadastrada com sucesso!"})
 		sql.query("INSERT INTO turma VALUES (?,?)", [req.id, req.body.codigo]);
-		res.render('index');
+		res.render('index', {success: success});
 	}
 })
 
