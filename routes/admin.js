@@ -53,8 +53,11 @@ router.get('/alunos/ver', permissao, (req,res) => {
 
 
 router.get('/alunos/deletar/:id', permissao, (req,res) => {
+	var success = [];
+
+	success.push({text:"Estudante deletado(a) com sucesso!"})
 	sql.query("DELETE FROM alunos WHERE matricula=?", [req.params.id]);
-	res.render('admin');
+	res.render('index',{success: success});
 })
 
 router.get('/alunos/editar/:id', permissao ,(req,res) => {
@@ -114,7 +117,11 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 	}
 
 	if(!req.body.entrada || req.body.entrada == null || typeof req.body.entrada == undefined){
-		erros.push({text: "Erro: Data inválida!"})
+		erros.push({text: "Erro: Data de entrada inválida!"})
+	}
+
+	if(!req.body.nascimento || req.body.nascimento == null || typeof req.body.nascimento == undefined){
+		erros.push({text: "Erro: Data de nascimento inválida!"})
 	}
 
 	if(req.body.nome.length < 2){
@@ -122,7 +129,7 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 	}
 
 	if(erros.length > 0){
-		res.render("admin/addAluno", {erros: erros})
+		res.render("admin/alunos/addAluno", {erros: erros})
 	}else{
 		success.push({text:"Estudante registrado(a) com sucesso!"})
 		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?,?)", [req.body.matricula, req.body.nome, req.body.nascimento, req.body.turma, req.body.entrada,req.file.filename]);
