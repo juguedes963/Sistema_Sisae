@@ -61,7 +61,7 @@ router.get('/alunos/deletar/:id', permissao, (req,res) => {
 })
 
 router.get('/alunos/editar/:id', permissao ,(req,res) => {
-	sql.query("SELECT * FROM alunos INNER JOIN turma WHERE matricula = ? order by codigo", [req.params.id],  (err, results, fields) => {
+	sql.query("SELECT * FROM alunos INNER JOIN turma WHERE matricula=? order by codigo", [req.params.id],  (err, results, fields) => {
 		res.render('admin/alunos/editAluno',{matricula: req.params.id, turmas: results, nome: results[0].nome, codigo: results[0].codigo});
 	})	
 	
