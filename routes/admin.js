@@ -116,14 +116,7 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 		erros.push({text: "Erro: Nome inválido!"})
 	}
 
-	if(!req.body.entrada || req.body.entrada == null || typeof req.body.entrada == undefined){
-		erros.push({text: "Erro: Data de entrada inválida!"})
-	}
-
-	if(!req.body.nascimento || req.body.nascimento == null || typeof req.body.nascimento == undefined){
-		erros.push({text: "Erro: Data de nascimento inválida!"})
-	}
-
+	
 	if(req.body.nome.length < 2){
 		erros.push({text: "Erro: Nome muito curto!"})
 	}
@@ -132,13 +125,13 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 		res.render("admin/alunos/addAluno", {erros: erros})
 	}else{
 		success.push({text:"Estudante registrado(a) com sucesso!"})
-		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?,?)", [req.body.matricula, req.body.nome, req.body.nascimento, req.body.turma, req.body.entrada,req.file.filename]);
+		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.body.matricula, req.body.nome, req.body.turma, req.body.entrada, req.file.filename]);
 		res.render('index',{success: success});
 	}
 })
 
 router.post('/alunos/edit', urlencodeParser, upload.single('foto'), (req, res, next) => {
-	sql.query("UPDATE alunos set nome=?, turma=?, entrada=?, nascimento=?, foto=? WHERE matricula=?", [req.body.nome, req.body.turma, req.body.entrada,req.body.nascimento, req.file.filename, req.body.matricula]);
+	sql.query("UPDATE alunos set nome=?, turma=?, entrada=?, foto=? WHERE matricula=?", [req.body.nome, req.body.turma, req.body.entrada, req.file.filename, req.body.matricula]);
 	res.render('index');
 })
 
