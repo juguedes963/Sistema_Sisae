@@ -62,7 +62,7 @@ router.get('/alunos/deletar/:id', permissao, (req,res) => {
 
 router.get('/alunos/editar/:id', permissao ,(req,res) => {
 	sql.query("SELECT * FROM alunos INNER JOIN turma WHERE matricula = ? order by codigo", [req.params.id],  (err, results, fields) => {
-		res.render('admin/alunos/editAluno',{matricula: req.params.id, turmas: results, nome: results[0].nome, codigo: results[0].codigo, entrada: results[0].entrada});
+		res.render('admin/alunos/editAluno',{matricula: req.params.id, turmas: results, nome: results[0].nome, codigo: results[0].codigo});
 	})	
 	
 })
@@ -116,9 +116,12 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 		erros.push({text: "Erro: Nome inválido!"})
 	}
 
-	
 	if(req.body.nome.length < 2){
 		erros.push({text: "Erro: Nome muito curto!"})
+	}
+
+	if(!req.body.foto || req.body.foto == null || typeof req.body.foto == undefined){
+		erros.push({text: "Erro: Foto inválida!"})
 	}
 
 	if(erros.length > 0){
@@ -131,8 +134,29 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 })
 
 router.post('/alunos/edit', urlencodeParser, upload.single('foto'), (req, res, next) => {
-	sql.query("UPDATE alunos set nome=?, turma=?, entrada=?, foto=? WHERE matricula=?", [req.body.nome, req.body.turma, req.body.entrada, req.file.filename, req.body.matricula]);
-	res.render('index');
+	var erros = [];
+	var success = [];
+
+	if(!req.body.nome || req.body.nome == null || typeof req.body.nome == undefined){
+		erros.push({text: "Erro: Nome inválido!"})
+	}
+
+	if(req.body.nome.length < 2){
+		erros.push({text: "Erro: Nome muito curto!"})
+	}
+
+	if(!req.body.foto || req.body.foto == null || typeof req.body.foto == undefined){
+		erros.push({text: "Erro: Foto inválida!"})
+	}
+
+	if(erros.length > 0){
+		res.render("admin/alunos/editAluno", {erros: erros})
+	}else{
+		success.push({text:"Dados alterados com sucesso!"})
+		sql.query("UPDATE alunos set nome=?, turma=?, foto=? WHERE matricula=?", [req.body.nome, req.body.turma, req.file.filename, req.body.matricula]);
+		res.render('index',{success: success});
+	}
+
 })
 
 
