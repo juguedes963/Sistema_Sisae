@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Jul-2020 às 20:33
+-- Tempo de geração: 19-Jul-2020 às 00:05
 -- Versão do servidor: 10.4.13-MariaDB
 -- versão do PHP: 7.3.19
 
@@ -30,7 +30,6 @@ SET time_zone = "+00:00";
 CREATE TABLE `alunos` (
   `matricula` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
-  `nascimento` date NOT NULL,
   `turma` int(11) NOT NULL,
   `entrada` date NOT NULL,
   `foto` varchar(255) NOT NULL
@@ -40,11 +39,14 @@ CREATE TABLE `alunos` (
 -- Extraindo dados da tabela `alunos`
 --
 
-INSERT INTO `alunos` (`matricula`, `nome`, `nascimento`, `turma`, `entrada`, `foto`) VALUES
-(20201956, 'Febronio Barriga Gordorrítua', '2001-03-03', 1, '2018-02-05', 'foto-1594590637099.jpg'),
-(20201957, 'Frederico Matalascallando Corcuera', '2002-06-06', 2, '2018-02-05', 'foto-1594428952550.jpg'),
-(20201958, 'Godínez', '2001-02-01', 3, '2018-02-05', 'foto-1594656951709.jpg'),
-(20201959, 'Patricia Jiménez', '2002-09-17', 3, '2018-02-05', 'foto-1594591459904.jpg');
+INSERT INTO `alunos` (`matricula`, `nome`, `turma`, `entrada`, `foto`) VALUES
+(20201956, 'Febronio Barriga Gordorrítua', 1, '2018-02-05', 'foto-1594590637099.jpg'),
+(20201957, 'Frederico Matalascallando Corcuera', 2, '2018-02-05', 'foto-1594428952550.jpg'),
+(20201959, 'Patricia Jiménez', 3, '2018-02-05', 'foto-1595048901609.jpg'),
+(20201960, 'El Chavo del 8', 2, '2018-02-05', 'foto-1594689535464.jpg'),
+(20201961, 'La Chillindrina', 2, '2018-02-05', 'foto-1595021706360.png'),
+(20201962, 'Godínez', 3, '2020-07-18', 'foto-1595109771580.jpg'),
+(20201963, 'Adriano Pereira', 5, '2020-07-18', 'foto-1595109891114.jpg');
 
 -- --------------------------------------------------------
 
@@ -64,7 +66,10 @@ CREATE TABLE `turma` (
 INSERT INTO `turma` (`id`, `codigo`) VALUES
 (1, 'AA18'),
 (2, 'AB18'),
-(3, 'AC18');
+(3, 'AC18'),
+(4, 'AA19'),
+(5, 'AB19'),
+(6, 'AC19');
 
 -- --------------------------------------------------------
 
@@ -119,7 +124,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `turma`
 --
 ALTER TABLE `turma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`

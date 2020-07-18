@@ -120,10 +120,6 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 		erros.push({text: "Erro: Nome muito curto!"})
 	}
 
-	if(!req.body.foto || req.body.foto == null || typeof req.body.foto == undefined){
-		erros.push({text: "Erro: Foto inválida!"})
-	}
-
 	if(erros.length > 0){
 		res.render("admin/alunos/addAluno", {erros: erros})
 	}else{
@@ -143,10 +139,6 @@ router.post('/alunos/edit', urlencodeParser, upload.single('foto'), (req, res, n
 
 	if(req.body.nome.length < 2){
 		erros.push({text: "Erro: Nome muito curto!"})
-	}
-
-	if(!req.body.foto || req.body.foto == null || typeof req.body.foto == undefined){
-		erros.push({text: "Erro: Foto inválida!"})
 	}
 
 	if(erros.length > 0){
