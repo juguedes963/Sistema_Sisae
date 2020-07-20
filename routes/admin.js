@@ -39,6 +39,10 @@ router.get('/', permissao, (req, res) => {
 	res.render('admin/index');
 });
 
+router.get('/artigos',permissao, (req, res) => {
+	res.render('admin/ocorrencias/addArtigo')
+})
+
 router.get('/alunos', permissao, (req,res) => {
 	sql.query("SELECT * FROM turma order by codigo", (err, results, fields) => {
 		res.render('admin/alunos/addAluno',{turmas: results});
@@ -172,6 +176,15 @@ router.post('/turmas/add', urlencodeParser, (req, res) => {
 		sql.query("INSERT INTO turma VALUES (?,?)", [req.id, req.body.codigo]);
 		res.render('index', {success: success});
 	}
+})
+
+router.post('/artigos/add',urlencodeParser, (req, res) => {
+
+	var success = [];
+
+	success.push({text: "Artigo cadastrado com sucesso!"})
+	sql.query("INSERT INTO artigo values (?,?)", [req.body.numero, req.body.texto])
+	res.render('index', {success: success})
 })
 
 
