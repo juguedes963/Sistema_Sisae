@@ -11,7 +11,7 @@
 		<form action="../../alunos/edit" enctype="multipart/form-data" method="POST">
 			
 			<div class="form-group row">
-				<label for="nome" class="col-sm-2 col-form-label-sm">Nome:</label>
+				<label for="nome" class="col-sm-2 col-form-label-sm text-muted">Nome:</label>
 				<div class="col-sm-10">
 					<input type="text" id="nome" name="nome" placeholder="Nome" class="form-control" autocomplete="off"  value="{{nome}}" required>
 					<input type="hidden" id="matricula" name="matricula" value="{{matricula}}" required>
@@ -19,7 +19,7 @@
 			</div>
 
 			<div class="form-group row">
-				<label for="turma" class="col-sm-2 col-form-label-sm">Turma:</label>
+				<label for="turma" class="col-sm-2 col-form-label-sm text-muted">Turma:</label>
 				<div class="col-sm-10">
 					<select name="turma" class="custom-select">
 						{{#each turmas}}
@@ -34,7 +34,7 @@
 
 
 			<div class="form-group row">
-				<label for="foto" class="col-sm-2 col-form-label-sm">Foto:</label>
+				<label for="foto" class="col-sm-2 col-form-label-sm text-muted">Foto:</label>
 				<div class="col-sm-10">
 			    	<input type="file" class="form-control-file" name="foto" value="{{foto}}">
 				</div>
