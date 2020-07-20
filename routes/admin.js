@@ -43,6 +43,18 @@ router.get('/artigos',permissao, (req, res) => {
 	res.render('admin/ocorrencias/addArtigo')
 })
 
+router.get('/artigos/ver', permissao, (req,res) => {
+	sql.query("SELECT * FROM artigo order by numero", (err, results, fields) => {
+		res.render('admin/ocorrencias/listaArtigos',{data: results});
+	})
+})
+
+router.get('/artigo/ver/:id', permissao, (req,res) => {
+	sql.query("SELECT * FROM artigo WHERE numero=?", [req.params.id], (err, results, fields) => {
+		res.render('admin/ocorrencias/verArtigo',{data: results});
+	})
+})
+
 router.get('/alunos', permissao, (req,res) => {
 	sql.query("SELECT * FROM turma order by codigo", (err, results, fields) => {
 		res.render('admin/alunos/addAluno',{turmas: results});
@@ -180,11 +192,21 @@ router.post('/turmas/add', urlencodeParser, (req, res) => {
 
 router.post('/artigos/add',urlencodeParser, (req, res) => {
 
+	var erros = [];
 	var success = [];
 
-	success.push({text: "Artigo cadastrado com sucesso!"})
-	sql.query("INSERT INTO artigo values (?,?)", [req.body.numero, req.body.texto])
-	res.render('index', {success: success})
+	if(!req.body.numero || req.body.numero == null || typeof req.body.numero == undefined){
+		erros.push({text: "Erro: Número inválido!"})
+	}
+
+	if(erros.length > 0){
+		res.render("admin/ocorrencias/addArtigo", {erros: erros})
+	}else{
+		success.push({text: "Artigo cadastrado com sucesso!"})
+		sql.query("INSERT INTO artigo values (?,?)", [req.body.numero, req.body.texto])
+		res.render('index', {success: success})	
+	}
+
 })
 
 
