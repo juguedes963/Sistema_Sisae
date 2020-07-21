@@ -175,8 +175,6 @@ router.post('/alunos/edit', urlencodeParser, upload.single('foto'), (req, res, n
 	var erros = [];
 	var success = [];
 
-	console.log(req.file)
-
 
 	if(!req.body.nome || req.body.nome == null || typeof req.body.nome == undefined){
 		erros.push({text: "Erro: Nome inválido!"})
