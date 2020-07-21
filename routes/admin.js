@@ -52,7 +52,7 @@ router.get('/artigos/ver', permissao, (req,res) => {
 })
 
 router.get('/artigo/ver/:id', permissao, (req,res) => {
-	sql.query("SELECT * FROM artigo WHERE numero=?", [req.params.id], (err, results, fields) => {
+	sql.query("SELECT * FROM artigo INNER JOIN inciso ON (artigo.numero = inciso.id_artigo) WHERE numero=?", [req.params.id], (err, results, fields) => {
 		res.render('admin/ocorrencias/artigos/verArtigo',{data: results});
 	})
 })

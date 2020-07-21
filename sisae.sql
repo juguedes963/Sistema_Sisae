@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21-Jul-2020 às 00:39
+-- Tempo de geração: 21-Jul-2020 às 18:38
 -- Versão do servidor: 10.4.13-MariaDB
 -- versão do PHP: 7.3.19
 
@@ -40,7 +40,7 @@ CREATE TABLE `alunos` (
 --
 
 INSERT INTO `alunos` (`matricula`, `nome`, `turma`, `entrada`, `foto`) VALUES
-(20201956, 'Febronio Barriga Gordorrítua', 1, '2018-02-05', 'foto-1594590637099.jpg'),
+(20201956, 'Febronio Barriga Gordorrítua', 1, '2018-02-05', 'foto-1595299283252.jpg'),
 (20201957, 'Frederico Matalascallando Corcuera', 2, '2018-02-05', 'foto-1594428952550.jpg'),
 (20201959, 'Patricia Jiménez', 3, '2018-02-05', 'foto-1595048901609.jpg'),
 (20201960, 'El Chavo del 8', 2, '2018-02-05', 'foto-1595215239935.jpg'),
@@ -55,7 +55,7 @@ INSERT INTO `alunos` (`matricula`, `nome`, `turma`, `entrada`, `foto`) VALUES
 --
 
 CREATE TABLE `artigo` (
-  `numero` int(10) UNSIGNED NOT NULL,
+  `numero` int(11) UNSIGNED NOT NULL,
   `texto` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -65,6 +65,26 @@ CREATE TABLE `artigo` (
 
 INSERT INTO `artigo` (`numero`, `texto`) VALUES
 (11, 'Constituem direitos dos(as) discentes:');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `inciso`
+--
+
+CREATE TABLE `inciso` (
+  `id` int(11) NOT NULL,
+  `numero_romano` varchar(50) NOT NULL,
+  `texto_inciso` varchar(1000) NOT NULL,
+  `id_artigo` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `inciso`
+--
+
+INSERT INTO `inciso` (`id`, `numero_romano`, `texto_inciso`, `id_artigo`) VALUES
+(1, 'I', 'Ter sua integridade física, psicológica, intelectual, moral, étnica, de crença, de\r\ngênero e de arbítrio respeitada em qualquer ambiente físico ou virtual que esteja\r\nvinculado ao IFC.', 11);
 
 -- --------------------------------------------------------
 
@@ -129,6 +149,13 @@ ALTER TABLE `artigo`
   ADD PRIMARY KEY (`numero`);
 
 --
+-- Índices para tabela `inciso`
+--
+ALTER TABLE `inciso`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_artigo` (`id_artigo`);
+
+--
 -- Índices para tabela `turma`
 --
 ALTER TABLE `turma`
@@ -143,6 +170,12 @@ ALTER TABLE `usuario`
 --
 -- AUTO_INCREMENT de tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `inciso`
+--
+ALTER TABLE `inciso`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `turma`
@@ -165,6 +198,12 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `alunos`
   ADD CONSTRAINT `fk_aluno` FOREIGN KEY (`turma`) REFERENCES `turma` (`id`);
+
+--
+-- Limitadores para a tabela `inciso`
+--
+ALTER TABLE `inciso`
+  ADD CONSTRAINT `inciso_ibfk_1` FOREIGN KEY (`id_artigo`) REFERENCES `artigo` (`numero`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
