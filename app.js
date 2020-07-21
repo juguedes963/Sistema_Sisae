@@ -1,6 +1,6 @@
 //Definindo os módulos necessários para trabalhar com o nodes
 const express = require('express');
-var rotas = require('./routes/routes');
+var rotas = require('./routes/usuario');
 var admin = require('./routes/admin');
 const handlebars = require('express-handlebars');
 const path = require("path");
