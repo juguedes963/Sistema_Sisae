@@ -1,0 +1,47 @@
+<div class="container">
+	<h1 class="text-center my-4">Cadastrar novo Artigo</h1>
+
+	{{#each erros}}
+		{{>_error}}
+	{{else}}
+	{{/each}}
+
+	<div class="card bg-light">
+		<div class="card-body">
+			<form action="incisos/add" method="POST">
+
+				<div class="form-group row">
+					<label for="artigo" class="col-sm-2 col-form-label-sm text-muted">Número:</label>
+					<div class="col-sm-10">
+						<input type="text" id="numero_romano" name="numero_romano" placeholder="Número do Inciso" class="form-control" autocomplete="off" required>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="texto" class="col-sm-2 col-form-label-sm text-muted">Texto:</label>
+					<div class="col">
+						<textarea id="texto_inciso" name="texto_inciso" placeholder="Texto do Inciso" class="form-control" autocomplete="off" required></textarea>
+					</div>
+				</div>
+
+				<div class="form-group row">
+				<label for="id_artigo" class="col-sm-2 col-form-label-sm text-muted">Artigo:</label>
+				<div class="col-sm-10">
+					<select name="id_artigo" class="custom-select">
+						{{#each artigos}}
+						<option value="{{numero}}">{{numero}}</option>
+						{{else}}
+						<option value="0">Nenhuma artigo registrado</option>
+						{{/each}}
+					
+					</select>
+				</div>
+			</div>
+
+				<button type="submit" class="btn btn-success mt-4"><i class="fa fa-check mr-2"></i>Cadastrar Inciso</button>
+				
+			</form>
+		</div>
+	</div>
+	
+</div>

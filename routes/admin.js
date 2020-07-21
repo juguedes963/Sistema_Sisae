@@ -53,7 +53,7 @@ router.get('/artigos/ver', permissao, (req,res) => {
 
 router.get('/artigo/ver/:id', permissao, (req,res) => {
 	sql.query("SELECT * FROM artigo INNER JOIN inciso ON (artigo.numero = inciso.id_artigo) WHERE numero=?", [req.params.id], (err, results, fields) => {
-		res.render('admin/ocorrencias/artigos/verArtigo',{data: results});
+		res.render('admin/ocorrencias/artigos/verArtigo',{data: results, numero: results[0].numero, texto: results[0].texto});
 	})
 })
 
@@ -68,6 +68,15 @@ router.get('/artigo/deletar/:id', permissao, (req, res) => {
 router.get('/artigo/editar/:id', permissao, (req, res) => {
 	sql.query("SELECT * from artigo WHERE numero=?", [req.params.id], (err, results, fields) => {
 		res.render('admin/ocorrencias/artigos/editArtigo',{numero: req.params.id, texto: results[0].texto});
+	})
+})
+
+
+//INCISOS
+
+router.get('/incisos',permissao, (req, res) => {
+	sql.query("SELECT * FROM artigo order by numero", (err, results, fields) => {
+		res.render('admin/ocorrencias/incisos/addInciso',{artigos: results});
 	})
 })
 
@@ -231,7 +240,7 @@ router.post('/artigos/add',urlencodeParser, (req, res) => {
 	}
 
 	if(erros.length > 0){
-		res.render("admin/ocorrencias/addArtigo", {erros: erros})
+		res.render("admin/ocorrencias/artigos/addArtigo", {erros: erros})
 	}else{
 		success.push({text: "Artigo cadastrado com sucesso!"})
 		sql.query("INSERT INTO artigo values (?,?)", [req.body.numero, req.body.texto])
@@ -250,11 +259,38 @@ router.post('/artigos/edit',urlencodeParser, (req, res) => {
 	}
 
 	if(erros.length > 0){
-		res.render("admin/ocorrencias/editArtigo", {erros: erros})
+		res.render("admin/ocorrencias/artigos/editArtigo", {erros: erros})
 	}else{
 		success.push({text:"Artigo alterado com sucesso!"})
 		sql.query("UPDATE artigo set texto=? WHERE numero=?", [req.body.texto, req.body.numero]);
 		res.render('index',{success: success});
+	}
+
+})
+
+router.post('/incisos/add',urlencodeParser, (req, res) => {
+
+	var erros = [];
+	var success = [];
+
+	if(!req.body.numero_romano || req.body.numero_romano == null || typeof req.body.numero_romano == undefined){
+		erros.push({text: "Erro: Número inválido!"})
+	}
+
+	if(!req.body.texto_inciso || req.body.texto_inciso == null || typeof req.body.texto_inciso == undefined){
+		erros.push({text: "Erro: Texto inválido!"})
+	}
+
+	if(req.body.texto_inciso.length < 5){
+		erros.push({text: "Erro: Texto muito curto!"})
+	}
+
+	if(erros.length > 0){
+		res.render("admin/ocorrencias/incisos/addInciso", {erros: erros})
+	}else{
+		success.push({text: "Inciso cadastrado com sucesso!"})
+		sql.query("INSERT INTO inciso values (?,?,?,?)", [req.id, req.body.numero_romano, req.body.texto_inciso, req.body.id_artigo])
+		res.render('index', {success: success})	
 	}
 
 })

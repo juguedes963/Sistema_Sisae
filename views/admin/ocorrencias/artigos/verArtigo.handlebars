@@ -2,14 +2,16 @@
 	
 	<h1 class="text-center my-4">Artigo</h1>
 	
-	{{#data}}
+	
 
 	<div class="card mb-3">
 		
 		<div class="card-body text-secondary">
 			<p class="lead">Art. {{numero}} º</p>
 			<h5 class="card-title">{{texto}}</h5>
-			<p>{{numero_romano}}. {{texto_inciso}}</p>	
+			{{#data}}
+			<p>{{numero_romano}}. {{texto_inciso}}</p>
+			{{/data}}
 			<hr>
 			<a href="../../artigo/editar/{{numero}}" class="btn btn-success">Editar</a>
 			<a href="../../artigo/deletar/{{numero}}" class="btn btn-danger">Remover</a>
@@ -17,6 +19,6 @@
 	</div>	
 	
 		  
-	{{/data}}
+	
 					
 </div>
