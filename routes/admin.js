@@ -53,7 +53,14 @@ router.get('/artigos/ver', permissao, (req,res) => {
 
 router.get('/artigo/ver/:id', permissao, (req,res) => {
 	sql.query("SELECT * FROM artigo INNER JOIN inciso ON (artigo.numero = inciso.id_artigo) WHERE numero=?", [req.params.id], (err, results, fields) => {
-		res.render('admin/ocorrencias/artigos/verArtigo',{data: results, numero: results[0].numero, texto: results[0].texto});
+		if(results.length > 0){
+			res.render('admin/ocorrencias/artigos/verArtigo',{data: results, numero: results[0].numero, texto: results[0].texto});
+		}else {
+			sql.query("SELECT * from artigo WHERE numero=?", [req.params.id], (err, results, fields) => {
+				res.render('admin/ocorrencias/artigos/verArtigo',{numero: results[0].numero, texto: results[0].texto});
+			})
+		}
+
 	})
 })
 
@@ -79,6 +86,19 @@ router.get('/incisos',permissao, (req, res) => {
 		res.render('admin/ocorrencias/incisos/addInciso',{artigos: results});
 	})
 })
+
+router.get('/inciso/ver/:id', permissao, (req, res) => {
+	sql.query("SELECT * FROM inciso WHERE id=?", [req.params.id], (err, results, fields) => {
+		res.render('admin/ocorrencias/incisos/verInciso', {data: results})
+	})
+})
+
+router.get('/inciso/editar/:id', permissao, (req, res) => {
+	sql.query("SELECT * from inciso WHERE id=?", [req.params.id], (err, results, fields) => {
+		res.render('admin/ocorrencias/incisos/editInciso',{id: req.params.id, num_inciso: results[0].num_inciso, texto_inciso: results[0].texto_inciso});
+	})
+})
+
 
 
 
@@ -290,6 +310,33 @@ router.post('/incisos/add',urlencodeParser, (req, res) => {
 	}else{
 		success.push({text: "Inciso cadastrado com sucesso!"})
 		sql.query("INSERT INTO inciso values (?,?,?,?)", [req.id, req.body.num_inciso, req.body.texto_inciso, req.body.id_artigo])
+		res.render('index', {success: success})	
+	}
+
+})
+
+router.post('/inciso/edit',urlencodeParser, (req, res) => {
+
+	var erros = [];
+	var success = [];
+
+	if(!req.body.num_inciso || req.body.num_inciso == null || typeof req.body.num_inciso == undefined){
+		erros.push({text: "Erro: Número inválido!"})
+	}
+
+	if(!req.body.texto_inciso || req.body.texto_inciso == null || typeof req.body.texto_inciso == undefined){
+		erros.push({text: "Erro: Texto inválido!"})
+	}
+
+	if(req.body.texto_inciso.length < 5){
+		erros.push({text: "Erro: Texto muito curto!"})
+	}
+
+	if(erros.length > 0){
+		res.render("admin/ocorrencias/incisos/editInciso", {erros: erros})
+	}else{
+		success.push({text: "Inciso alterado com sucesso!"})
+		sql.query("UPDATE inciso set num_inciso=?, texto_inciso=? WHERE id=?", [req.body.num_inciso, req.body.texto_inciso, req.body.id])
 		res.render('index', {success: success})	
 	}
 

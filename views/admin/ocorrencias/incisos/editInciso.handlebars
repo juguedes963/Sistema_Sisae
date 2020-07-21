@@ -1,0 +1,33 @@
+<div class="container">
+	<h1 class="text-center my-4">Editar Inciso</h1>
+
+	{{#each erros}}
+		{{>_error}}
+	{{else}}
+	{{/each}}
+
+	<div class="card bg-light">
+		<div class="card-body">
+			<form action="../../inciso/edit" method="POST">
+
+				<div class="form-group row">
+					<input type="hidden" id="id" name="id" value="{{id}}" required>
+					<label for="texto_inciso" class="col-sm-2 col-form-label-sm text-muted">Número do inciso:</label>
+					<div class="col-sm-10">
+						<input type="text" name="num_inciso" placeholder="Número do Inciso" class="form-control" autocomplete="off" value="{{num_inciso}}"required>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="texto_inciso" class="col-sm-2 col-form-label-sm text-muted">Texto:</label>
+					<div class="col-sm-10">
+						<textarea id="texto_inciso" name="texto_inciso" placeholder="Texto do Inciso" class="form-control" autocomplete="off" required>{{texto_inciso}}</textarea>
+					</div>
+				</div>
+
+				<button type="submit" class="btn btn-success mt-4"><i class="fa fa-check mr-2"></i>Salvar Alterações</button>
+			</form>
+		</div>
+	</div>
+	
+</div>
