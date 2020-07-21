@@ -273,7 +273,7 @@ router.post('/incisos/add',urlencodeParser, (req, res) => {
 	var erros = [];
 	var success = [];
 
-	if(!req.body.numero_romano || req.body.numero_romano == null || typeof req.body.numero_romano == undefined){
+	if(!req.body.num_inciso || req.body.num_inciso == null || typeof req.body.num_inciso == undefined){
 		erros.push({text: "Erro: Número inválido!"})
 	}
 
@@ -289,7 +289,7 @@ router.post('/incisos/add',urlencodeParser, (req, res) => {
 		res.render("admin/ocorrencias/incisos/addInciso", {erros: erros})
 	}else{
 		success.push({text: "Inciso cadastrado com sucesso!"})
-		sql.query("INSERT INTO inciso values (?,?,?,?)", [req.id, req.body.numero_romano, req.body.texto_inciso, req.body.id_artigo])
+		sql.query("INSERT INTO inciso values (?,?,?,?)", [req.id, req.body.num_inciso, req.body.texto_inciso, req.body.id_artigo])
 		res.render('index', {success: success})	
 	}
 

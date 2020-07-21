@@ -9,9 +9,11 @@
 		<div class="card-body text-secondary">
 			<p class="lead">Art. {{numero}} º</p>
 			<h5 class="card-title">{{texto}}</h5>
-			{{#data}}
-			<p>{{numero_romano}}. {{texto_inciso}}</p>
-			{{/data}}
+			{{#each data}}
+			<p>{{num_inciso}}. {{texto_inciso}}</p>
+			{{else}}
+			<p>Não há incisos cadastrados para esse artigo!</p>
+			{{/each}}
 			<hr>
 			<a href="../../artigo/editar/{{numero}}" class="btn btn-success">Editar</a>
 			<a href="../../artigo/deletar/{{numero}}" class="btn btn-danger">Remover</a>
