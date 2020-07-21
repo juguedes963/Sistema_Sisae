@@ -39,22 +39,41 @@ router.get('/', permissao, (req, res) => {
 	res.render('admin/index');
 });
 
+
+//ARTIGOS
 router.get('/artigos',permissao, (req, res) => {
-	res.render('admin/ocorrencias/addArtigo')
+	res.render('admin/ocorrencias/artigos/addArtigo')
 })
 
 router.get('/artigos/ver', permissao, (req,res) => {
 	sql.query("SELECT * FROM artigo order by numero", (err, results, fields) => {
-		res.render('admin/ocorrencias/listaArtigos',{data: results});
+		res.render('admin/ocorrencias/artigos/listaArtigos',{data: results});
 	})
 })
 
 router.get('/artigo/ver/:id', permissao, (req,res) => {
 	sql.query("SELECT * FROM artigo WHERE numero=?", [req.params.id], (err, results, fields) => {
-		res.render('admin/ocorrencias/verArtigo',{data: results});
+		res.render('admin/ocorrencias/artigos/verArtigo',{data: results});
 	})
 })
 
+router.get('/artigo/deletar/:id', permissao, (req, res) => {
+	var success = [];
+
+	success.push({text:"Artigo deletado(a) com sucesso!"})
+	sql.query("DELETE FROM artigo WHERE numero=?", [req.params.id]);
+	res.render('index',{success: success});
+})
+
+router.get('/artigo/editar/:id', permissao, (req, res) => {
+	sql.query("SELECT * from artigo WHERE numero=?", [req.params.id], (err, results, fields) => {
+		res.render('admin/ocorrencias/artigos/editArtigo',{numero: req.params.id, texto: results[0].texto});
+	})
+})
+
+
+
+//ALUNOS
 router.get('/alunos', permissao, (req,res) => {
 	sql.query("SELECT * FROM turma order by codigo", (err, results, fields) => {
 		res.render('admin/alunos/addAluno',{turmas: results});
@@ -78,7 +97,7 @@ router.get('/alunos/deletar/:id', permissao, (req,res) => {
 
 router.get('/alunos/editar/:id', permissao ,(req,res) => {
 	sql.query("SELECT * FROM alunos INNER JOIN turma WHERE matricula=? order by codigo", [req.params.id],  (err, results, fields) => {
-		res.render('admin/alunos/editAluno',{matricula: req.params.id, turmas: results, nome: results[0].nome, codigo: results[0].codigo});
+		res.render('admin/alunos/editAluno',{matricula: req.params.id, turmas: results, nome: results[0].nome, codigo: results[0].codigo, foto: results[0].foto});
 	})	
 	
 })
@@ -89,6 +108,9 @@ router.get('/aluno/ver/:id', permissao, (req,res) => {
 	})
 })
 
+
+
+//TURMAS
 router.get('/turmas', permissao, (req,res) => {
 	
 		res.render('admin/turmas/addTurma');
@@ -205,6 +227,25 @@ router.post('/artigos/add',urlencodeParser, (req, res) => {
 		success.push({text: "Artigo cadastrado com sucesso!"})
 		sql.query("INSERT INTO artigo values (?,?)", [req.body.numero, req.body.texto])
 		res.render('index', {success: success})	
+	}
+
+})
+
+router.post('/artigos/edit',urlencodeParser, (req, res) => {
+
+	var erros = [];
+	var success = [];
+
+	if(!req.body.numero || req.body.numero == null || typeof req.body.numero == undefined){
+		erros.push({text: "Erro: Número inválido!"})
+	}
+
+	if(erros.length > 0){
+		res.render("admin/ocorrencias/editArtigo", {erros: erros})
+	}else{
+		success.push({text:"Artigo alterado com sucesso!"})
+		sql.query("UPDATE artigo set texto=? WHERE numero=?", [req.body.texto, req.body.numero]);
+		res.render('index',{success: success});
 	}
 
 })
