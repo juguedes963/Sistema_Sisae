@@ -11,7 +11,6 @@ const sql = mysql.createConnection({
 	port: '3306',
 });
 sql.query('use sisae');
-const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
 /* ======= Definindo rotas via GET e POST =======*/
