@@ -199,6 +199,7 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 		erros.push({text: "Erro: Insira uma foto válida!"})
 	}
 
+	
 	if(erros.length > 0){
 		res.render("admin/alunos/addAluno", {erros: erros})
 	}else{
