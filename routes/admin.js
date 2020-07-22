@@ -99,6 +99,14 @@ router.get('/inciso/editar/:id', permissao, (req, res) => {
 	})
 })
 
+router.get('/inciso/deletar/:id', permissao, (req, res) => {
+	var success = [];
+
+	success.push({text:"Inciso deletado(a) com sucesso!"})
+	sql.query("DELETE FROM inciso WHERE id=?", [req.params.id]);
+	res.render('index',{success: success});
+})
+
 
 
 
