@@ -12,6 +12,7 @@ const sql = mysql.createConnection({
 });
 sql.query('use sisae');
 const {permissao} = require("../helpers/permissao")
+const converter = require("tc-roman-number")
 
 var multer  = require('multer');
 var storage = multer.diskStorage({
@@ -89,6 +90,7 @@ router.get('/incisos',permissao, (req, res) => {
 
 router.get('/inciso/ver/:id', permissao, (req, res) => {
 	sql.query("SELECT * FROM inciso WHERE id=?", [req.params.id], (err, results, fields) => {
+		console.log(results[0].num_romano)
 		res.render('admin/ocorrencias/incisos/verInciso', {data: results})
 	})
 })
@@ -332,11 +334,16 @@ router.post('/incisos/add',urlencodeParser, (req, res) => {
 		erros.push({text: "Erro: Texto muito curto!"})
 	}
 
+	var num = Number(req.body.num_inciso);
+
+	converter.intToRoman(num)
+	
 	if(erros.length > 0){
 		res.render("admin/ocorrencias/incisos/addInciso", {erros: erros})
 	}else{
+		
 		success.push({text: "Inciso cadastrado com sucesso!"})
-		sql.query("INSERT INTO inciso values (?,?,?,?)", [req.id, req.body.num_inciso, req.body.texto_inciso, req.body.id_artigo])
+		sql.query("INSERT INTO inciso values (?,?,?,?,?)", [req.id, req.body.num_inciso, converter.intToRoman(num), req.body.texto_inciso, req.body.id_artigo])
 		res.render('index', {success: success})	
 	}
 

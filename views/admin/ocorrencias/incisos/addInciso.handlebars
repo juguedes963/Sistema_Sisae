@@ -1,5 +1,5 @@
 <div class="container">
-	<h1 class="text-center my-4">Cadastrar novo Artigo</h1>
+	<h1 class="text-center my-4">Cadastrar novo Inciso</h1>
 
 	{{#each erros}}
 		{{>_error}}
@@ -11,9 +11,9 @@
 			<form action="incisos/add" method="POST">
 
 				<div class="form-group row">
-					<label for="artigo" class="col-sm-2 col-form-label-sm text-muted">Número:</label>
+					<label for="num_inciso" class="col-sm-2 col-form-label-sm text-muted">Número:</label>
 					<div class="col-sm-10">
-						<input type="text" name="num_inciso" placeholder="Número do Inciso" class="form-control" autocomplete="off" required>
+						<input type="number" name="num_inciso" placeholder="Número do Inciso" class="form-control" autocomplete="off" min="1" required>
 					</div>
 				</div>
 
