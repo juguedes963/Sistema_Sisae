@@ -187,26 +187,37 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 	var erros = [];
 	var success = [];
 
-	if(!req.body.nome || req.body.nome == null || typeof req.body.nome == undefined){
-		erros.push({text: "Erro: Nome inválido!"})
-	}
+	sql.query("SELECT * FROM alunos WHERE matricula=?", [req.body.matricula], (err, results, fields) => {
+		if(results != ""){
+			console.log(results)
+			erros.push({text: "Erro: Nº de matrícula já cadastrado!"})
+			res.render("admin/alunos/addAluno", {erros: erros})
+		}else{
 
-	if(req.body.nome.length < 2){
-		erros.push({text: "Erro: Nome muito curto!"})
-	}
+			if(!req.body.nome || req.body.nome == null || typeof req.body.nome == undefined){
+				erros.push({text: "Erro: Nome inválido!"})
+			}
 
-	if(!req.file || req.file == null || typeof req.file == undefined){
-		erros.push({text: "Erro: Insira uma foto válida!"})
-	}
+			if(req.body.nome.length < 2){
+				erros.push({text: "Erro: Nome muito curto!"})
+			}
+
+			if(!req.file || req.file == null || typeof req.file == undefined){
+				erros.push({text: "Erro: Insira uma foto válida!"})
+			}
+
+			
+			if(erros.length > 0){
+				res.render("admin/alunos/addAluno", {erros: erros})
+			}else{
+				success.push({text:"Estudante registrado(a) com sucesso!"})
+				sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.body.matricula, req.body.nome, req.body.turma, new Date, req.file.filename]);
+				res.render('index',{success: success});
+			}
+		}
+	})
 
 	
-	if(erros.length > 0){
-		res.render("admin/alunos/addAluno", {erros: erros})
-	}else{
-		success.push({text:"Estudante registrado(a) com sucesso!"})
-		sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.body.matricula, req.body.nome, req.body.turma, new Date, req.file.filename]);
-		res.render('index',{success: success});
-	}
 })
 
 router.post('/alunos/edit', urlencodeParser, upload.single('foto'), (req, res, next) => {
