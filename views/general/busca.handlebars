@@ -4,7 +4,7 @@
 		<div class="card-body bg-light">
 			<hr>	
 			{{#each data}}
-				<a class="text-secondary" href="../alunos/ver/{{matricula}}"><p class="lead">{{nome}}</p></a>
+				<a href="../alunos/ver/{{matricula}}"><p class="lead">{{nome}}</p></a>
 			{{else}}
 				<p class="lead">Nenhum aluno registrado com esse nome!</p>
 			{{/each}}
