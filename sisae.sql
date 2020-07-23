@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21-Jul-2020 às 18:38
+-- Tempo de geração: 24-Jul-2020 às 01:44
 -- Versão do servidor: 10.4.13-MariaDB
 -- versão do PHP: 7.3.19
 
@@ -46,7 +46,8 @@ INSERT INTO `alunos` (`matricula`, `nome`, `turma`, `entrada`, `foto`) VALUES
 (20201960, 'El Chavo del 8', 2, '2018-02-05', 'foto-1595215239935.jpg'),
 (20201961, 'La Chillindrina', 2, '2018-02-05', 'foto-1595021706360.png'),
 (20201962, 'Godínez', 3, '2020-07-18', 'foto-1595109771580.jpg'),
-(20201963, 'Adriano Pereira', 5, '2020-07-18', 'foto-1595214211065.jpg');
+(20201963, 'Adriano Pereira', 5, '2020-07-18', 'foto-1595214211065.jpg'),
+(20201964, 'Luís Boça', 6, '2020-07-23', 'foto-1595474465998.jpg');
 
 -- --------------------------------------------------------
 
@@ -64,6 +65,8 @@ CREATE TABLE `artigo` (
 --
 
 INSERT INTO `artigo` (`numero`, `texto`) VALUES
+(1, 'asasasasas'),
+(2, 'sdfsdfsdfsdfsfd'),
 (11, 'Constituem direitos dos(as) discentes:');
 
 -- --------------------------------------------------------
@@ -74,7 +77,8 @@ INSERT INTO `artigo` (`numero`, `texto`) VALUES
 
 CREATE TABLE `inciso` (
   `id` int(11) NOT NULL,
-  `numero_romano` varchar(50) NOT NULL,
+  `num_inciso` int(11) NOT NULL,
+  `num_romano` varchar(50) NOT NULL,
   `texto_inciso` varchar(1000) NOT NULL,
   `id_artigo` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -83,8 +87,9 @@ CREATE TABLE `inciso` (
 -- Extraindo dados da tabela `inciso`
 --
 
-INSERT INTO `inciso` (`id`, `numero_romano`, `texto_inciso`, `id_artigo`) VALUES
-(1, 'I', 'Ter sua integridade física, psicológica, intelectual, moral, étnica, de crença, de\r\ngênero e de arbítrio respeitada em qualquer ambiente físico ou virtual que esteja\r\nvinculado ao IFC.', 11);
+INSERT INTO `inciso` (`id`, `num_inciso`, `num_romano`, `texto_inciso`, `id_artigo`) VALUES
+(13, 1, 'I', 'Ter sua integridade física, psicológica, intelectual, moral, étnica, de crença, de\r\ngênero e de arbítrio respeitada em qualquer ambiente físico ou virtual que esteja\r\nvinculado ao IFC.', 11),
+(14, 2, 'II', 'Ser informado(a) sobre o Regulamento de Conduta Discente por\r\nmeio da Coordenação de Assistência Estudantil (CAE/CGAE), ou setor\r\nequivalente do campus, no início do período letivo.', 11);
 
 -- --------------------------------------------------------
 
@@ -175,7 +180,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `inciso`
 --
 ALTER TABLE `inciso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `turma`
