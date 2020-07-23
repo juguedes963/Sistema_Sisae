@@ -189,7 +189,6 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 
 	sql.query("SELECT * FROM alunos WHERE matricula=?", [req.body.matricula], (err, results, fields) => {
 		if(results != ""){
-			console.log(results)
 			erros.push({text: "Erro: Nº de matrícula já cadastrado!"})
 			res.render("admin/alunos/addAluno", {erros: erros})
 		}else{
@@ -275,17 +274,25 @@ router.post('/artigos/add',urlencodeParser, (req, res) => {
 	var erros = [];
 	var success = [];
 
-	if(!req.body.numero || req.body.numero == null || typeof req.body.numero == undefined){
-		erros.push({text: "Erro: Número inválido!"})
-	}
+	sql.query("SELECT * FROM artigo WHERE numero=?", [req.body.numero], (err, results, fields) => {
+		if(results != ""){
+			erros.push({text: "Erro: Artigo já cadastrado!"})
+			res.render("admin/ocorrencias/artigos/addArtigo", {erros: erros})
+		}else{
 
-	if(erros.length > 0){
-		res.render("admin/ocorrencias/artigos/addArtigo", {erros: erros})
-	}else{
-		success.push({text: "Artigo cadastrado com sucesso!"})
-		sql.query("INSERT INTO artigo values (?,?)", [req.body.numero, req.body.texto])
-		res.render('index', {success: success})	
-	}
+			if(!req.body.numero || req.body.numero == null || typeof req.body.numero == undefined){
+				erros.push({text: "Erro: Número inválido!"})
+			}
+
+			if(erros.length > 0){
+				res.render("admin/ocorrencias/artigos/addArtigo", {erros: erros})
+			}else{
+				success.push({text: "Artigo cadastrado com sucesso!"})
+				sql.query("INSERT INTO artigo values (?,?)", [req.body.numero, req.body.texto])
+				res.render('index', {success: success})	
+			}
+		}
+	})
 
 })
 
