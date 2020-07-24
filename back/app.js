@@ -11,7 +11,7 @@ const passport = require("passport");
 require("./config/auth")(passport);
 const moment = require('moment');
 var multer  = require('multer');
-var upload = multer({ dest: './public/uploads/' })
+var upload = multer({ dest: '../front/public/uploads/' })
 
 const app = express();
 
@@ -42,6 +42,7 @@ const app = express();
 	app.use(bodyParser.json());
 
 	//Template engine
+	app.set("views", path.join("../front/", "views"))
 	app.engine("handlebars",handlebars({defaultLayout:'main',  helpers: {
       formatDate: (date) => {
            return moment(date).format('DD/MM/YYYY')
@@ -50,7 +51,7 @@ const app = express();
 	app.set("view engine",'handlebars');
 
 	//Public
-	app.use(express.static(path.join(__dirname, "public")));
+	app.use(express.static(path.join("../front/", "public")));
 
 
 
