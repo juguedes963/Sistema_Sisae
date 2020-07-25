@@ -1,4 +1,4 @@
-//Definindo os módulos essenciais para trabalhar com rotas
+//Definindo as bibliotecas e módulos essenciais para trabalhar na tela principal
 const express = require('express');
 const router = express.Router();
 

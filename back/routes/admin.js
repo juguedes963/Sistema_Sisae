@@ -1,4 +1,4 @@
-//Definindo as bibliotecas essenciais
+//Definindo as bibliotecas essenciais para trabalhar na área administrativa
 const express = require('express');
 const bodyParser = require('body-parser');
 const converter = require("tc-roman-number")
