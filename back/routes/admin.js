@@ -7,7 +7,9 @@ const {permissao} = require("../helpers/permissao")
 //Criando a conexão com a base de dados
 const connection = require("../database/connect")
 
-//Criando o serviço de upload de imagens
+//Services
+
+//Upload de imagens
 const upload = require("../services/upload")
 
 const router = express.Router();
