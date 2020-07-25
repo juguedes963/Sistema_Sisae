@@ -1,18 +1,12 @@
 //Definindo os módulos essenciais para trabalhar com rotas
 const express = require('express');
-const router = express.Router();
-const mysql = require('mysql');
 const bodyParser = require('body-parser');
-const urlencodeParser = bodyParser.urlencoded({extended:false});
-const sql = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password: '',
-	port: '3306',
-});
-sql.query('use sisae');
-const {permissao} = require("../helpers/permissao")
 const converter = require("tc-roman-number")
+const urlencodeParser = bodyParser.urlencoded({extended:false});
+const {permissao} = require("../helpers/permissao")
+const connection = require("../connection/connect")
+
+const router = express.Router();
 
 var multer  = require('multer');
 var storage = multer.diskStorage({
@@ -47,17 +41,17 @@ router.get('/artigos',permissao, (req, res) => {
 })
 
 router.get('/artigos/ver', permissao, (req,res) => {
-	sql.query("SELECT * FROM artigo order by numero", (err, results, fields) => {
+	connection.sql.query("SELECT * FROM artigo order by numero", (err, results, fields) => {
 		res.render('admin/ocorrencias/artigos/listaArtigos',{data: results});
 	})
 })
 
 router.get('/artigo/ver/:id', permissao, (req,res) => {
-	sql.query("SELECT * FROM artigo INNER JOIN inciso ON (artigo.numero = inciso.id_artigo) WHERE numero=?", [req.params.id], (err, results, fields) => {
+	connection.sql.query("SELECT * FROM artigo INNER JOIN inciso ON (artigo.numero = inciso.id_artigo) WHERE numero=?", [req.params.id], (err, results, fields) => {
 		if(results.length > 0){
 			res.render('admin/ocorrencias/artigos/verArtigo',{data: results, numero: results[0].numero, texto: results[0].texto});
 		}else {
-			sql.query("SELECT * from artigo WHERE numero=?", [req.params.id], (err, results, fields) => {
+			connection.sql.query("SELECT * from artigo WHERE numero=?", [req.params.id], (err, results, fields) => {
 				res.render('admin/ocorrencias/artigos/verArtigo',{numero: results[0].numero, texto: results[0].texto});
 			})
 		}
@@ -69,12 +63,12 @@ router.get('/artigo/deletar/:id', permissao, (req, res) => {
 	var success = [];
 
 	success.push({text:"Artigo deletado(a) com sucesso!"})
-	sql.query("DELETE FROM artigo WHERE numero=?", [req.params.id]);
+	connection.sql.query("DELETE FROM artigo WHERE numero=?", [req.params.id]);
 	res.render('index',{success: success});
 })
 
 router.get('/artigo/editar/:id', permissao, (req, res) => {
-	sql.query("SELECT * from artigo WHERE numero=?", [req.params.id], (err, results, fields) => {
+	connection.sql.query("SELECT * from artigo WHERE numero=?", [req.params.id], (err, results, fields) => {
 		res.render('admin/ocorrencias/artigos/editArtigo',{numero: req.params.id, texto: results[0].texto});
 	})
 })
@@ -83,20 +77,20 @@ router.get('/artigo/editar/:id', permissao, (req, res) => {
 //INCISOS
 
 router.get('/incisos',permissao, (req, res) => {
-	sql.query("SELECT * FROM artigo order by numero", (err, results, fields) => {
+	connection.sql.query("SELECT * FROM artigo order by numero", (err, results, fields) => {
 		res.render('admin/ocorrencias/incisos/addInciso',{artigos: results});
 	})
 })
 
 router.get('/inciso/ver/:id', permissao, (req, res) => {
-	sql.query("SELECT * FROM inciso WHERE id=?", [req.params.id], (err, results, fields) => {
+	connection.sql.query("SELECT * FROM inciso WHERE id=?", [req.params.id], (err, results, fields) => {
 		console.log(results[0].num_romano)
 		res.render('admin/ocorrencias/incisos/verInciso', {data: results})
 	})
 })
 
 router.get('/inciso/editar/:id', permissao, (req, res) => {
-	sql.query("SELECT * from inciso WHERE id=?", [req.params.id], (err, results, fields) => {
+	connection.sql.query("SELECT * from inciso WHERE id=?", [req.params.id], (err, results, fields) => {
 		res.render('admin/ocorrencias/incisos/editInciso',{id: req.params.id, num_inciso: results[0].num_inciso, texto_inciso: results[0].texto_inciso});
 	})
 })
@@ -105,7 +99,7 @@ router.get('/inciso/deletar/:id', permissao, (req, res) => {
 	var success = [];
 
 	success.push({text:"Inciso deletado(a) com sucesso!"})
-	sql.query("DELETE FROM inciso WHERE id=?", [req.params.id]);
+	connection.sql.query("DELETE FROM inciso WHERE id=?", [req.params.id]);
 	res.render('index',{success: success});
 })
 
@@ -114,13 +108,13 @@ router.get('/inciso/deletar/:id', permissao, (req, res) => {
 
 //ALUNOS
 router.get('/alunos', permissao, (req,res) => {
-	sql.query("SELECT * FROM turma order by codigo", (err, results, fields) => {
+	connection.sql.query("SELECT * FROM turma order by codigo", (err, results, fields) => {
 		res.render('admin/alunos/addAluno',{turmas: results});
 	})
 })
 
 router.get('/alunos/ver', permissao, (req,res) => {
-	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) order by nome", (err, results, fields) => {
+	connection.sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) order by nome", (err, results, fields) => {
 		res.render('admin/alunos/listaAlunos',{data: results});
 	})
 })
@@ -130,19 +124,19 @@ router.get('/alunos/deletar/:id', permissao, (req,res) => {
 	var success = [];
 
 	success.push({text:"Estudante deletado(a) com sucesso!"})
-	sql.query("DELETE FROM alunos WHERE matricula=?", [req.params.id]);
+	connection.sql.query("DELETE FROM alunos WHERE matricula=?", [req.params.id]);
 	res.render('index',{success: success});
 })
 
 router.get('/alunos/editar/:id', permissao ,(req,res) => {
-	sql.query("SELECT * FROM alunos INNER JOIN turma WHERE matricula=? order by codigo", [req.params.id],  (err, results, fields) => {
+	connection.sql.query("SELECT * FROM alunos INNER JOIN turma WHERE matricula=? order by codigo", [req.params.id],  (err, results, fields) => {
 		res.render('admin/alunos/editAluno',{matricula: req.params.id, turmas: results, nome: results[0].nome, codigo: results[0].codigo, foto: results[0].foto});
 	})	
 	
 })
 
 router.get('/aluno/ver/:id', permissao, (req,res) => {
-	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) WHERE matricula=?", [req.params.id], (err, results, fields) => {
+	connection.sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) WHERE matricula=?", [req.params.id], (err, results, fields) => {
 		res.render('admin/alunos/verAluno',{data: results});
 	})
 })
@@ -157,13 +151,13 @@ router.get('/turmas', permissao, (req,res) => {
 })
 
 router.get('/turmas/ver', permissao, (req,res) => {
-	sql.query("SELECT * FROM turma order by codigo", (err, results, fields) => {
+	connection.sql.query("SELECT * FROM turma order by codigo", (err, results, fields) => {
 		res.render('admin/turmas/listaTurmas',{data: results});
 	})
 })
 
 router.get('/turma/ver/:id', permissao, (req,res) => {
-	sql.query("SELECT * FROM turma INNER JOIN alunos ON (alunos.turma = turma.id) WHERE id=? order by nome", [req.params.id], (err, results, fields) => {
+	connection.sql.query("SELECT * FROM turma INNER JOIN alunos ON (alunos.turma = turma.id) WHERE id=? order by nome", [req.params.id], (err, results, fields) => {
 		if(results.length > 0){
 			res.render('admin/turmas/verTurma',{data: results, codigo: results[0].codigo});
 		}else {
@@ -173,13 +167,13 @@ router.get('/turma/ver/:id', permissao, (req,res) => {
 })
 
 router.get('/users' , permissao, (req, res) => {
-	sql.query("SELECT * from usuario", (err, results, fields) => {
+	connection.sql.query("SELECT * from usuario", (err, results, fields) => {
 		res.render('admin/select',{data: results});
 	})
 })
 
 router.get('/users/deletar/:id', permissao, (req,res) => {
-	sql.query("DELETE FROM usuario WHERE id=?", [req.params.id]);
+	connection.sql.query("DELETE FROM usuario WHERE id=?", [req.params.id]);
 	res.render('admin');
 })
 
@@ -189,7 +183,7 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 	var erros = [];
 	var success = [];
 
-	sql.query("SELECT * FROM alunos WHERE matricula=?", [req.body.matricula], (err, results, fields) => {
+	connection.sql.query("SELECT * FROM alunos WHERE matricula=?", [req.body.matricula], (err, results, fields) => {
 		if(results != ""){
 			erros.push({text: "Erro: Nº de matrícula já cadastrado!"})
 			res.render("admin/alunos/addAluno", {erros: erros})
@@ -212,7 +206,7 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 				res.render("admin/alunos/addAluno", {erros: erros})
 			}else{
 				success.push({text:"Estudante registrado(a) com sucesso!"})
-				sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.body.matricula, req.body.nome, req.body.turma, new Date, req.file.filename]);
+				connection.sql.query("INSERT INTO alunos VALUES (?,?,?,?,?)", [req.body.matricula, req.body.nome, req.body.turma, new Date, req.file.filename]);
 				res.render('index',{success: success});
 			}
 		}
@@ -242,7 +236,7 @@ router.post('/alunos/edit', urlencodeParser, upload.single('foto'), (req, res, n
 		res.render("admin/alunos/editAluno", {erros: erros})
 	}else{
 		success.push({text:"Dados alterados com sucesso!"})
-		sql.query("UPDATE alunos set nome=?, turma=?, foto=? WHERE matricula=?", [req.body.nome, req.body.turma, req.file.filename, req.body.matricula]);
+		connection.sql.query("UPDATE alunos set nome=?, turma=?, foto=? WHERE matricula=?", [req.body.nome, req.body.turma, req.file.filename, req.body.matricula]);
 		res.render('index',{success: success});
 	}
 
@@ -266,7 +260,7 @@ router.post('/turmas/add', urlencodeParser, (req, res) => {
 		res.render("admin/turmas/addTurma", {erros: erros})
 	}else {
 		success.push({text: "Turma cadastrada com sucesso!"})
-		sql.query("INSERT INTO turma VALUES (?,?)", [req.id, req.body.codigo]);
+		connection.sql.query("INSERT INTO turma VALUES (?,?)", [req.id, req.body.codigo]);
 		res.render('index', {success: success});
 	}
 })
@@ -276,7 +270,7 @@ router.post('/artigos/add',urlencodeParser, (req, res) => {
 	var erros = [];
 	var success = [];
 
-	sql.query("SELECT * FROM artigo WHERE numero=?", [req.body.numero], (err, results, fields) => {
+	connection.sql.query("SELECT * FROM artigo WHERE numero=?", [req.body.numero], (err, results, fields) => {
 		if(results != ""){
 			erros.push({text: "Erro: Artigo já cadastrado!"})
 			res.render("admin/ocorrencias/artigos/addArtigo", {erros: erros})
@@ -290,7 +284,7 @@ router.post('/artigos/add',urlencodeParser, (req, res) => {
 				res.render("admin/ocorrencias/artigos/addArtigo", {erros: erros})
 			}else{
 				success.push({text: "Artigo cadastrado com sucesso!"})
-				sql.query("INSERT INTO artigo values (?,?)", [req.body.numero, req.body.texto])
+				connection.sql.query("INSERT INTO artigo values (?,?)", [req.body.numero, req.body.texto])
 				res.render('index', {success: success})	
 			}
 		}
@@ -311,7 +305,7 @@ router.post('/artigos/edit',urlencodeParser, (req, res) => {
 		res.render("admin/ocorrencias/artigos/editArtigo", {erros: erros})
 	}else{
 		success.push({text:"Artigo alterado com sucesso!"})
-		sql.query("UPDATE artigo set texto=? WHERE numero=?", [req.body.texto, req.body.numero]);
+		connection.sql.query("UPDATE artigo set texto=? WHERE numero=?", [req.body.texto, req.body.numero]);
 		res.render('index',{success: success});
 	}
 
@@ -343,7 +337,7 @@ router.post('/incisos/add',urlencodeParser, (req, res) => {
 	}else{
 		
 		success.push({text: "Inciso cadastrado com sucesso!"})
-		sql.query("INSERT INTO inciso values (?,?,?,?,?)", [req.id, req.body.num_inciso, converter.intToRoman(num), req.body.texto_inciso, req.body.id_artigo])
+		connection.sql.query("INSERT INTO inciso values (?,?,?,?,?)", [req.id, req.body.num_inciso, converter.intToRoman(num), req.body.texto_inciso, req.body.id_artigo])
 		res.render('index', {success: success})	
 	}
 
@@ -370,7 +364,7 @@ router.post('/inciso/edit',urlencodeParser, (req, res) => {
 		res.render("admin/ocorrencias/incisos/editInciso", {erros: erros})
 	}else{
 		success.push({text: "Inciso alterado com sucesso!"})
-		sql.query("UPDATE inciso set num_inciso=?, texto_inciso=? WHERE id=?", [req.body.num_inciso, req.body.texto_inciso, req.body.id])
+		connection.sql.query("UPDATE inciso set num_inciso=?, texto_inciso=? WHERE id=?", [req.body.num_inciso, req.body.texto_inciso, req.body.id])
 		res.render('index', {success: success})	
 	}
 

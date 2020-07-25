@@ -4,13 +4,7 @@ const router = express.Router();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const urlencodeParser = bodyParser.urlencoded({extended:true});
-const sql = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password: '',
-	port: '3306',
-});
-sql.query('use sisae');
+const connection = require("../connection/connect")
 const passport = require("passport");
 
 /* ======= Definindo rotas via GET e POST =======*/
@@ -34,13 +28,13 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/alunos', (req,res) => {
-	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) order by nome", (err, results, fields) => {
+	connection.sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) order by nome", (err, results, fields) => {
 		res.render('general/alunos', {data: results});
 	});
 })
 
 router.get('/alunos/ver/:id', (req,res) => {
-	sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) WHERE matricula=?", [req.params.id], (err, results, fields) => {
+	connection.sql.query("SELECT * FROM alunos INNER JOIN turma ON (alunos.turma = turma.id) WHERE matricula=?", [req.params.id], (err, results, fields) => {
 		res.render('general/verAluno',{data: results});
 	})
 })
@@ -83,7 +77,7 @@ router.post('/users/add', urlencodeParser, (req, res) => {
 		res.render("index", {erros: erros});
 	}else{
 		success.push({text: "Usuário(a) cadastrado com êxito!"})
-		sql.query("INSERT INTO usuario VALUES (?,?,?,?,?)", [req.id, req.body.email, req.body.username, req.body.senha, false]);
+		connection.sql.query("INSERT INTO usuario VALUES (?,?,?,?,?)", [req.id, req.body.email, req.body.username, req.body.senha, false]);
 		res.render('index', {success: success})
 	}
 })
@@ -98,7 +92,7 @@ router.post('/login', (req, res, next) => {
 
 
 router.post('/alunos/buscar', urlencodeParser, (req,res) => {
-	sql.query("SELECT * from alunos WHERE nome LIKE '%" + req.body.search + "%' order by nome ", (err, results, fields) => {
+	connection.sql.query("SELECT * from alunos WHERE nome LIKE '%" + req.body.search + "%' order by nome ", (err, results, fields) => {
 		res.render('general/busca', {data: results})
 	})
 })
