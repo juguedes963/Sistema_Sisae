@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 //Criando a conexão com a base de dados
-const connection = require("../connection/connect")
+const connection = require("../database/connect")
 const passport = require("passport");
 
 /* ======= Definindo rotas via GET e POST =======*/

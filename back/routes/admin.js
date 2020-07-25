@@ -5,7 +5,7 @@ const converter = require("tc-roman-number")
 const {permissao} = require("../helpers/permissao")
 
 //Criando a conexão com a base de dados
-const connection = require("../connection/connect")
+const connection = require("../database/connect")
 
 const router = express.Router();
 
