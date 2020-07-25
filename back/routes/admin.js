@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const converter = require("tc-roman-number")
-const {permissao} = require("../helpers/permissao")
+const {permissao} = require("../config/permissao")
 
 //Criando a conexão com a base de dados
 const connection = require("../database/connect")
