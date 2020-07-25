@@ -10,8 +10,6 @@ const flash = require("connect-flash");
 const passport = require("passport");
 require("./config/auth")(passport);
 const moment = require('moment');
-//var multer  = require('multer');
-//var upload = multer({ dest: '../front/public/uploads/' })
 
 const app = express();
 
