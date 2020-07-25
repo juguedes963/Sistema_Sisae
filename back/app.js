@@ -1,4 +1,4 @@
-//Definindo os módulos necessários para trabalhar com o nodes
+//Definindo os módulos essenciais para trabalhar com o nodes
 const express = require('express');
 var rotas = require('./routes/usuario');
 var admin = require('./routes/admin');
