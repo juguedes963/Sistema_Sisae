@@ -1,4 +1,4 @@
-//Definindo os bibliotecas essenciais
+//Definindo as bibliotecas essenciais
 const express = require('express');
 const bodyParser = require('body-parser');
 const converter = require("tc-roman-number")
@@ -7,9 +7,12 @@ const {permissao} = require("../helpers/permissao")
 //Criando a conexão com a base de dados
 const connection = require("../database/connect")
 
+//Criando o serviço de upload de imagens
+const upload = require("../services/upload")
+
 const router = express.Router();
 
-const upload = require("../services/upload")
+
 
 /* ======= Definindo rotas via GET e POST =======*/
 
