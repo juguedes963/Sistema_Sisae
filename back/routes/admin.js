@@ -1,10 +1,11 @@
-//Definindo os módulos essenciais para trabalhar com rotas
+//Definindo os bibliotecas essenciais
 const express = require('express');
 const bodyParser = require('body-parser');
 const converter = require("tc-roman-number")
 const {permissao} = require("../helpers/permissao")
+
+//Criando a conexão com a base de dados
 const connection = require("../connection/connect")
-console.log(connection.urlencodeParser)
 
 const router = express.Router();
 

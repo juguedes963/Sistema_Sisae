@@ -1,6 +1,8 @@
 //Definindo os módulos essenciais para trabalhar com rotas
 const express = require('express');
 const router = express.Router();
+
+//Criando a conexão com a base de dados
 const connection = require("../connection/connect")
 const passport = require("passport");
 
