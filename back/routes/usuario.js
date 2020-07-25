@@ -1,8 +1,6 @@
 //Definindo os módulos essenciais para trabalhar com rotas
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser');
-const urlencodeParser = bodyParser.urlencoded({extended:true});
 const connection = require("../connection/connect")
 const passport = require("passport");
 
@@ -46,7 +44,7 @@ router.get('/logout', (req,res) => {
 
 
 /* ======= POST =======*/
-router.post('/users/add', urlencodeParser, (req, res) => {
+router.post('/users/add', connection.urlencodeParser, (req, res) => {
 
 	var erros = [];
 	var success = [];
@@ -90,7 +88,7 @@ router.post('/login', (req, res, next) => {
 })
 
 
-router.post('/alunos/buscar', urlencodeParser, (req,res) => {
+router.post('/alunos/buscar', connection.urlencodeParser, (req,res) => {
 	connection.sql.query("SELECT * from alunos WHERE nome LIKE '%" + req.body.search + "%' order by nome ", (err, results, fields) => {
 		res.render('general/busca', {data: results})
 	})

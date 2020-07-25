@@ -2,9 +2,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const converter = require("tc-roman-number")
-const urlencodeParser = bodyParser.urlencoded({extended:false});
 const {permissao} = require("../helpers/permissao")
 const connection = require("../connection/connect")
+console.log(connection.urlencodeParser)
 
 const router = express.Router();
 
@@ -179,7 +179,7 @@ router.get('/users/deletar/:id', permissao, (req,res) => {
 
 /* ======= POST =======*/
 
-router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, next) => {
+router.post('/alunos/add', connection.urlencodeParser, upload.single('foto'), (req, res, next) => {
 	var erros = [];
 	var success = [];
 
@@ -215,7 +215,7 @@ router.post('/alunos/add', urlencodeParser, upload.single('foto'), (req, res, ne
 	
 })
 
-router.post('/alunos/edit', urlencodeParser, upload.single('foto'), (req, res, next) => {
+router.post('/alunos/edit', connection.urlencodeParser, upload.single('foto'), (req, res, next) => {
 	var erros = [];
 	var success = [];
 
@@ -243,7 +243,7 @@ router.post('/alunos/edit', urlencodeParser, upload.single('foto'), (req, res, n
 })
 
 
-router.post('/turmas/add', urlencodeParser, (req, res) => {
+router.post('/turmas/add', connection.urlencodeParser, (req, res) => {
 
 	var erros = [];
 	var success = [];
@@ -265,7 +265,7 @@ router.post('/turmas/add', urlencodeParser, (req, res) => {
 	}
 })
 
-router.post('/artigos/add',urlencodeParser, (req, res) => {
+router.post('/artigos/add',connection.urlencodeParser, (req, res) => {
 
 	var erros = [];
 	var success = [];
@@ -292,7 +292,7 @@ router.post('/artigos/add',urlencodeParser, (req, res) => {
 
 })
 
-router.post('/artigos/edit',urlencodeParser, (req, res) => {
+router.post('/artigos/edit',connection.urlencodeParser, (req, res) => {
 
 	var erros = [];
 	var success = [];
@@ -311,7 +311,7 @@ router.post('/artigos/edit',urlencodeParser, (req, res) => {
 
 })
 
-router.post('/incisos/add',urlencodeParser, (req, res) => {
+router.post('/incisos/add',connection.urlencodeParser, (req, res) => {
 
 	var erros = [];
 	var success = [];
@@ -343,7 +343,7 @@ router.post('/incisos/add',urlencodeParser, (req, res) => {
 
 })
 
-router.post('/inciso/edit',urlencodeParser, (req, res) => {
+router.post('/inciso/edit',connection.urlencodeParser, (req, res) => {
 
 	var erros = [];
 	var success = [];
