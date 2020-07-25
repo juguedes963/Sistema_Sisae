@@ -1,7 +1,6 @@
 //Definindo os módulos essenciais para trabalhar com rotas
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const urlencodeParser = bodyParser.urlencoded({extended:true});
 const connection = require("../connection/connect")
